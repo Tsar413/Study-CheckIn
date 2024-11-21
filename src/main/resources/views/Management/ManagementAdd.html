@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ManagementAdd</title>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" placeholder="Username" id="username">
+    <input type="text" placeholder="Password" id="password">
+    <select id="privilege">
+        <option value="Admin">Admin</option>
+        <option value="Teacher">Teacher</option>
+    </select>
+    <button id="submit">Submit</button>
+<!--    <button id="return">Go Back</button>-->
+    <br>
+    <input type="text" placeholder="ClassId" id="classId">
+    <input type="text" placeholder="Major" id="major">
+    <input type="text" placeholder="StudentNumber" id="studentNumber">
+    <button id="submit1">Submit</button>
+
+<script inline="javascript">
+    let submit = document.getElementById("submit");
+    let submit1 = document.getElementById("submit1");
+
+    submit.onclick = function() {
+        //Get the value in the box
+        var usernameVal = $("#username").val();
+        var passwordVal = $("#password").val();
+        var selectedText = $('#privilege option:selected').val();
+
+        $.get("/managementAdd-userTest?"+$.param({username:usernameVal,password:passwordVal,privilege:selectedText
+            }),function(data){
+                console.log(data);
+            });
+
+        $.get("/managementAdd-user?"+$.param({username:usernameVal,password:passwordVal,privilege:selectedText
+            }),function(data){
+                console.log(data);
+            });
+    }
+
+     submit1.onclick = function() {
+        //Get the value in the box
+        var classIdVal = $("#classId").val();
+        var majorVal = $("#major").val();
+        var studentNumberVal = $("#studentNumber").val();
+
+        $.get("/managementAdd-classTest?"+$.param({classId:classIdVal,major:majorVal,studentNumber:studentNumberVal
+            }),function(data){
+                console.log(data);
+            });
+    }
+</script>
+</body>
+</html>
