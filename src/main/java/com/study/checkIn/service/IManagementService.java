@@ -1,6 +1,7 @@
 package com.study.checkIn.service;
 
 import com.study.checkIn.entity.ClassesGrades;
+import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
 
 public interface IManagementService {
@@ -9,4 +10,10 @@ public interface IManagementService {
     String managementAddUser(String username, String password, String privilege);
 
     ClassesGrades managementAddClassTest(String classId, String major, String studentNumber);
+
+    String managementAddClass(String classId, String major, String studentNumber);
+
+    Course managementAddCourseTest(String courseName, String classGradesName, String teacherName, String courseTime);
+
+    String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime);
 }

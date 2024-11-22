@@ -1,8 +1,10 @@
 package com.study.checkIn.service.impl;
 
 import com.study.checkIn.entity.ClassesGrades;
+import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
 import com.study.checkIn.mapper.ClassesGradesServiceMapper;
+import com.study.checkIn.mapper.CourseServiceMapper;
 import com.study.checkIn.mapper.ManagementServiceMapper;
 import com.study.checkIn.service.IManagementService;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class ManagementServiceImpl implements IManagementService {
 
     @Resource
     private ClassesGradesServiceMapper classesGradesServiceMapper;
+
+    @Resource
+    private CourseServiceMapper courseServiceMapper;
 
     @Override
     public User managementAddUserTest(String username, String password, String privilege) {
@@ -62,5 +67,74 @@ public class ManagementServiceImpl implements IManagementService {
         classesGrades.setStudentNumber(Integer.parseInt(studentNumber));
         System.out.println(classesGrades);
         return classesGrades;
+    }
+
+    @Override
+    public String managementAddClass(String classId, String major, String studentNumber) {
+        ClassesGrades classesGrades = new ClassesGrades();
+        classesGrades.setId(0);
+        if(classesGradesServiceMapper.findBiggestClassesGradesId() != null){
+            classesGrades.setId(classesGradesServiceMapper.findBiggestClassesGradesId() + 1);
+        }
+        classesGrades.setClassId(Integer.parseInt(classId));
+        classesGrades.setMajor(major);
+        classesGrades.setStudentNumber(Integer.parseInt(studentNumber));
+        System.out.println(classesGrades);
+        if(classesGradesServiceMapper.findByClassGradesId(Integer.parseInt(classId)) != null){
+            return "0";
+        }
+        classesGradesServiceMapper.save(classesGrades);
+        return "1";
+    }
+
+    @Override
+    public Course managementAddCourseTest(String courseName, String classGradesName, String teacherName, String courseTime) {
+        Course course = new Course();
+        course.setId(0);
+        if(courseServiceMapper.findBiggestId() != null){
+            course.setId(courseServiceMapper.findBiggestId() + 1);
+        }
+        course.setCourseId(0);
+        if(courseServiceMapper.findBiggestCourseId() != null){
+            course.setCourseId(courseServiceMapper.findBiggestCourseId() + 1);
+        }
+        course.setCourseName(courseName);
+        if(managementServiceMapper.findBiggestUsername(teacherName) == null){
+            return null;
+        }
+        course.setTeacherId(managementServiceMapper.findBiggestUsername(teacherName));
+        if(classesGradesServiceMapper.findByMajor(classGradesName) == null){
+            return null;
+        }
+        course.setClassId(classesGradesServiceMapper.findByMajor(classGradesName));
+        course.setCourseTime(courseTime);
+        System.out.println(course);
+        return course;
+    }
+
+    @Override
+    public String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime) {
+        Course course = new Course();
+        course.setId(0);
+        if(courseServiceMapper.findBiggestId() != null){
+            course.setId(courseServiceMapper.findBiggestId() + 1);
+        }
+        course.setCourseId(0);
+        if(courseServiceMapper.findBiggestCourseId() != null){
+            course.setCourseId(courseServiceMapper.findBiggestCourseId() + 1);
+        }
+        course.setCourseName(courseName);
+        if(managementServiceMapper.findBiggestUsername(teacherName) == null){
+            return "-1";
+        }
+        course.setTeacherId(managementServiceMapper.findBiggestUsername(teacherName));
+        if(classesGradesServiceMapper.findByMajor(classGradesName) == null){
+            return "-1";
+        }
+        course.setClassId(classesGradesServiceMapper.findByMajor(classGradesName));
+        course.setCourseTime(courseTime);
+        System.out.println(course);
+        courseServiceMapper.save(course);
+        return "1";
     }
 }

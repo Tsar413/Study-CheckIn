@@ -8,5 +8,6 @@ public interface ManagementServiceMapper extends JpaRepository<User, Integer> {
     @Query(value = "select MAX(user_id) from User", nativeQuery = true)
     Integer findBiggestUserId();
 
-
+    @Query(value = "select user_id from User where username = ?1", nativeQuery = true)
+    Integer findBiggestUsername(String username);
 }

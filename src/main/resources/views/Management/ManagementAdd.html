@@ -19,10 +19,17 @@
     <input type="text" placeholder="Major" id="major">
     <input type="text" placeholder="StudentNumber" id="studentNumber">
     <button id="submit1">Submit</button>
+    <br>
+    <input type="text" placeholder="CourseName" id="courseName">
+    <input type="text" placeholder="ClassName" id="classGradesName">
+    <input type="text" placeholder="TeacherName" id="teacherName">
+    <input type="text" placeholder="CourseTime" id="courseTime">
+    <button id="submit2">Submit</button>
 
 <script inline="javascript">
     let submit = document.getElementById("submit");
     let submit1 = document.getElementById("submit1");
+    let submit2 = document.getElementById("submit2");
 
     submit.onclick = function() {
         //Get the value in the box
@@ -51,6 +58,29 @@
             }),function(data){
                 console.log(data);
             });
+
+        $.get("/managementAdd-class?"+$.param({classId:classIdVal,major:majorVal,studentNumber:studentNumberVal
+            }),function(data){
+                console.log(data);
+            });
+     }
+
+     submit2.onclick = function() {
+        //Get the value in the box
+        var courseNameVal = $("#courseName").val();
+        var classGradesNameVal = $("#classGradesName").val();
+        var teacherNameVal = $("#teacherName").val();
+        var courseTimeVal = $("#courseTime").val();
+
+        $.get("/managementAdd-courseTest?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal,teacherName:teacherNameVal,courseTime:courseTimeVal
+            }),function(data){
+                console.log(data);
+            });
+
+<!--        $.get("/managementAdd-course?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal,teacherName:teacherNameVal,courseTime:courseTimeVal-->
+<!--            }),function(data){-->
+<!--                console.log(data);-->
+<!--            });-->
     }
 </script>
 </body>
