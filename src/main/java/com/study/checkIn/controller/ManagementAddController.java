@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 public class ManagementAddController {
@@ -48,5 +49,10 @@ public class ManagementAddController {
     @GetMapping("/managementAdd-course")
     public String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime){
         return iManagementService.managementAddCourse(courseName, classGradesName, teacherName, courseTime);
+    }
+
+    @GetMapping("/managementAdd-checkTeacher")
+    public List<User> managementAddCheckTeacher(String teacherName){
+        return iManagementService.managementAddCheckTeacher(teacherName);
     }
 }

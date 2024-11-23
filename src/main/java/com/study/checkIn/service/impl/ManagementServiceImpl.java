@@ -5,16 +5,17 @@ import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
 import com.study.checkIn.mapper.ClassesGradesServiceMapper;
 import com.study.checkIn.mapper.CourseServiceMapper;
-import com.study.checkIn.mapper.ManagementServiceMapper;
+import com.study.checkIn.mapper.UserServiceMapper;
 import com.study.checkIn.service.IManagementService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ManagementServiceImpl implements IManagementService {
     @Resource
-    private ManagementServiceMapper managementServiceMapper;
+    private UserServiceMapper userServiceMapper;
 
     @Resource
     private ClassesGradesServiceMapper classesGradesServiceMapper;
@@ -40,8 +41,8 @@ public class ManagementServiceImpl implements IManagementService {
     public String managementAddUser(String username, String password, String privilege) {
         User user = new User();
         user.setUserId(0);
-        if (managementServiceMapper.findBiggestUserId() != null){
-            user.setUserId(managementServiceMapper.findBiggestUserId() + 1);
+        if (userServiceMapper.findBiggestUserId() != null){
+            user.setUserId(userServiceMapper.findBiggestUserId() + 1);
         }
         user.setUsername(username);
         user.setPassword(password);
@@ -51,7 +52,7 @@ public class ManagementServiceImpl implements IManagementService {
             user.setPrivilege(2);
         }
         System.out.println(user);
-        managementServiceMapper.save(user);
+        userServiceMapper.save(user);
         return "1";
     }
 
@@ -99,10 +100,10 @@ public class ManagementServiceImpl implements IManagementService {
             course.setCourseId(courseServiceMapper.findBiggestCourseId() + 1);
         }
         course.setCourseName(courseName);
-        if(managementServiceMapper.findBiggestUsername(teacherName) == null){
+        if(userServiceMapper.findBiggestUsername(teacherName) == null){
             return null;
         }
-        course.setTeacherId(managementServiceMapper.findBiggestUsername(teacherName));
+        course.setTeacherId(userServiceMapper.findBiggestUsername(teacherName));
         if(classesGradesServiceMapper.findByMajor(classGradesName) == null){
             return null;
         }
@@ -124,10 +125,10 @@ public class ManagementServiceImpl implements IManagementService {
             course.setCourseId(courseServiceMapper.findBiggestCourseId() + 1);
         }
         course.setCourseName(courseName);
-        if(managementServiceMapper.findBiggestUsername(teacherName) == null){
+        if(userServiceMapper.findBiggestUsername(teacherName) == null){
             return "-1";
         }
-        course.setTeacherId(managementServiceMapper.findBiggestUsername(teacherName));
+        course.setTeacherId(userServiceMapper.findBiggestUsername(teacherName));
         if(classesGradesServiceMapper.findByMajor(classGradesName) == null){
             return "-1";
         }
@@ -136,5 +137,10 @@ public class ManagementServiceImpl implements IManagementService {
         System.out.println(course);
         courseServiceMapper.save(course);
         return "1";
+    }
+
+    @Override
+    public List<User> managementAddCheckTeacher(String teacherName) {
+        return userServiceMapper.findByDiffUsername(teacherName);
     }
 }

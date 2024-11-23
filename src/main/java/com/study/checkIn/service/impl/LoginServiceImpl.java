@@ -1,11 +1,8 @@
 package com.study.checkIn.service.impl;
 
 import com.study.checkIn.entity.User;
-import com.study.checkIn.mapper.ManagementServiceMapper;
 import com.study.checkIn.service.ILoginService;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 @Service
 public class LoginServiceImpl implements ILoginService {
