@@ -3,6 +3,7 @@ package com.study.checkIn.controller;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
+import com.study.checkIn.service.ICreateTableRequestService;
 import com.study.checkIn.service.IManagementService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import java.util.List;
 public class ManagementAddController {
     @Resource
     private IManagementService iManagementService;
+
+    @Resource
+    private ICreateTableRequestService iCreateTableRequestService;
 
     @GetMapping("/managementAdd")
     public ModelAndView showAHtml() {
@@ -54,5 +58,15 @@ public class ManagementAddController {
     @GetMapping("/managementAdd-checkTeacher")
     public List<User> managementAddCheckTeacher(String teacherName){
         return iManagementService.managementAddCheckTeacher(teacherName);
+    }
+
+    @GetMapping("/managementAdd-checkClassGrades")
+    public List<ClassesGrades> managementAddCheckClassGrades(String classGradesName){
+        return iManagementService.managementAddCheckClassGrades(classGradesName);
+    }
+
+    @GetMapping("/managementAdd-createTableRequest1")
+    public String managementAddCreateTableRequest1(String courseName, String classGradesName){
+        return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest1(courseName + classGradesName));
     }
 }

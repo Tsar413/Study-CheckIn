@@ -143,4 +143,9 @@ public class ManagementServiceImpl implements IManagementService {
     public List<User> managementAddCheckTeacher(String teacherName) {
         return userServiceMapper.findByDiffUsername(teacherName);
     }
+
+    @Override
+    public List<ClassesGrades> managementAddCheckClassGrades(String classGradesName) {
+        return classesGradesServiceMapper.findByClassGradesName(classGradesName);
+    }
 }

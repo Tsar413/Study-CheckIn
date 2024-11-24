@@ -20,4 +20,6 @@ public interface IManagementService {
     String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime);
 
     List<User> managementAddCheckTeacher(String teacherName);
+
+    List<ClassesGrades> managementAddCheckClassGrades(String classGradesName);
 }

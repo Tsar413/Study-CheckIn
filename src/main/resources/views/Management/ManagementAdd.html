@@ -21,15 +21,13 @@
     <button id="submit1">Submit</button>
     <br>
     <input type="text" placeholder="CourseName" id="courseName">
-    <input type="text" placeholder="ClassName" id="classGradesName">
-    <input type="text" placeholder="TeacherName" id="teacherName">
+    <input type="text" placeholder="ClassName" id="classGradesName" oninput="checkClassGradesName(event)">
+    <select id="selectClassGradesName"></select>
+    <input type="text" placeholder="TeacherName" id="teacherName" oninput="checkTeacherName(event)">
+    <select id="selectTeacherName"></select>
     <input type="text" placeholder="CourseTime" id="courseTime">
     <button id="submit2">Submit</button>
     <br>
-    <input type="text" placeholder="TeacherName" id="teacherName1" oninput="checkTeacherName(event)">
-    <div id="selectArea1">
-        <select id="selectTeacherName"></select>
-    </div>
 
 <script inline="javascript">
     let submit = document.getElementById("submit");
@@ -86,21 +84,32 @@
 <!--            }),function(data){-->
 <!--                console.log(data);-->
 <!--            });-->
+        $.get("/managementAdd-createTableRequest1?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal
+            }),function(data){
+                console.log(data);
+            });
      }
 
      var selectTeacherName = document.getElementById('selectTeacherName');
+     var selectClassGradesName = document.getElementById('selectClassGradesName');
 
      // 为select元素添加change事件监听器
      selectTeacherName.addEventListener('click', function() {
          // 当select选项改变时，将选中项的value赋值给文本框
-         document.getElementById('teacherName1').value = selectTeacherName.value;
+         document.getElementById('teacherName').value = selectTeacherName.value;
+     });
+
+          // 为select元素添加change事件监听器
+     selectClassGradesName.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('classGradesName').value = selectClassGradesName.value;
      });
 
     function checkTeacherName(event) {
         var input = event.target;
         // 这里可以添加更多的逻辑，比如验证输入内容
         //Get the value in the box
-        var teacherNameVal = $("#teacherName1").val();
+        var teacherNameVal = $("#teacherName").val();
 
         document.getElementById('selectTeacherName').innerHTML = '';
 
@@ -114,6 +123,28 @@
                     option.value = item.username;
                     option.label = item.username;
                     document.getElementById('selectTeacherName').appendChild(option);
+                });
+            });
+    }
+
+    function checkClassGradesName(event){
+        var input = event.target;
+        // 这里可以添加更多的逻辑，比如验证输入内容
+        //Get the value in the box
+        var classGradesNameVal = $("#classGradesName").val();
+
+        document.getElementById('selectClassGradesName').innerHTML = '';
+
+        $.get("/managementAdd-checkClassGrades?"+$.param({classGradesName:classGradesNameVal
+            }),function(data){
+                console.log(data);
+
+                // 遍历后端数据，为每个数据项创建option元素
+                data.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.major;
+                    option.label = item.major;
+                    document.getElementById('selectClassGradesName').appendChild(option);
                 });
             });
     }
