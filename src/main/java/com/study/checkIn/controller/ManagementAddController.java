@@ -1,5 +1,6 @@
 package com.study.checkIn.controller;
 
+import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
@@ -68,5 +69,16 @@ public class ManagementAddController {
     @GetMapping("/managementAdd-createTableRequest1")
     public String managementAddCreateTableRequest1(String courseName, String classGradesName){
         return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest1(courseName + classGradesName));
+    }
+
+    @GetMapping("/managementAdd-createTableRequestStudent")
+    public String managementAddCreateTableRequestStudent(String classGradesName){
+        return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest1(classGradesName + "Student"));
+    }
+
+    @GetMapping("/managementAdd-addStudent")
+    public String managementAddAddStudent(String classGradesName, String studentId, String studentName){
+        StudentDTO studentDTO = new StudentDTO(null, Integer.parseInt(studentId), studentName, classGradesName + "Student");
+        return String.valueOf(iCreateTableRequestService.managementAddAddStudent(studentDTO));
     }
 }

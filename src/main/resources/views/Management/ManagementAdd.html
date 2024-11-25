@@ -28,11 +28,17 @@
     <input type="text" placeholder="CourseTime" id="courseTime">
     <button id="submit2">Submit</button>
     <br>
+    <input type="text" placeholder="Major" id="major1">
+    <input type="text" placeholder="StudentId" id="studentId">
+    <input type="text" placeholder="StudentName" id="studentName">
+    <button id="submit3">Submit</button>
+    <br>
 
 <script inline="javascript">
     let submit = document.getElementById("submit");
     let submit1 = document.getElementById("submit1");
     let submit2 = document.getElementById("submit2");
+    let submit3 = document.getElementById("submit3");
 
     submit.onclick = function() {
         //Get the value in the box
@@ -66,6 +72,11 @@
             }),function(data){
                 console.log(data);
             });
+
+        $.get("/managementAdd-createTableRequestStudent?"+$.param({classGradesName:majorVal
+            }),function(data){
+                console.log(data);
+            });
      }
 
      submit2.onclick = function() {
@@ -85,6 +96,18 @@
 <!--                console.log(data);-->
 <!--            });-->
         $.get("/managementAdd-createTableRequest1?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal
+            }),function(data){
+                console.log(data);
+            });
+     }
+
+     submit3.onclick = function() {
+        //Get the value in the box
+        var majorVal = $("#major1").val();
+        var studentIdVal = $("#studentId").val();
+        var studentNameVal = $("#studentName").val();
+
+        $.get("/managementAdd-addStudent?"+$.param({classGradesName:majorVal,studentId:studentIdVal,studentName:studentNameVal
             }),function(data){
                 console.log(data);
             });
