@@ -71,6 +71,11 @@ public class ManagementAddController {
         return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest1(courseName + classGradesName));
     }
 
+    @GetMapping("/managementAdd-createTableRequest2")
+    public String managementAddCreateTableRequest2(String courseName, String classGradesName){
+        return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest2(courseName, classGradesName));
+    }
+
     @GetMapping("/managementAdd-createTableRequestStudent")
     public String managementAddCreateTableRequestStudent(String classGradesName){
         return String.valueOf(iCreateTableRequestService.managementAddCreateTableRequest1(classGradesName + "Student"));
@@ -80,5 +85,10 @@ public class ManagementAddController {
     public String managementAddAddStudent(String classGradesName, String studentId, String studentName){
         StudentDTO studentDTO = new StudentDTO(null, Integer.parseInt(studentId), studentName, classGradesName + "Student");
         return String.valueOf(iCreateTableRequestService.managementAddAddStudent(studentDTO));
+    }
+
+    @GetMapping("/managementAdd-addCheckInTestStep1")
+    public List<Course> managementAddAddCheckInTestStep1(String classGradesName){
+        return iManagementService.managementAddAddCheckInTestStep1(classGradesName);
     }
 }

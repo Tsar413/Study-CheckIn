@@ -6,4 +6,6 @@ public interface ICreateTableRequestService {
     Integer managementAddCreateTableRequest1(String tableName);
 
     Integer managementAddAddStudent(StudentDTO studentDTO);
+
+    Integer managementAddCreateTableRequest2(String courseName, String classGradesName);
 }

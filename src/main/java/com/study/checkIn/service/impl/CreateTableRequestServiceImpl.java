@@ -19,6 +19,25 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
     }
 
     @Override
+    public Integer managementAddCreateTableRequest2(String courseName, String classGradesName) {
+        StringBuilder sql = new StringBuilder("CREATE TABLE ");
+        sql.append(classGradesName).append(courseName).append(" (");
+        sql.append("id INT Primary Key,").append("student_id INT,")
+                .append("student_name varchar(20));");
+        jdbcTemplate.execute(sql.toString());
+        List<StudentDTO> list = copyStudentToCourseTables(classGradesName);
+        for (StudentDTO studentDTO : list){
+            StringBuilder sql1 = new StringBuilder("INSERT INTO ");
+            sql1.append(classGradesName).append(courseName).append(" values (");
+            sql1.append(getBiggestStudentTableId(classGradesName + courseName)).append(",");
+            sql1.append(studentDTO.getStudentId()).append(", '");
+            sql1.append(studentDTO.getStudentName()).append("');");
+            jdbcTemplate.execute(sql1.toString());
+        }
+        return 1;
+    }
+
+    @Override
     public Integer managementAddCreateTableRequest1(String tableName) {
         StringBuilder sql = new StringBuilder("CREATE TABLE ");
         sql.append(tableName).append(" (");
@@ -49,16 +68,19 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
         return result + 1;
     }
 
-//    StringBuilder sql1 = new StringBuilder("select * from " + studentTableName + ";");
-//    List<StudentDTO> list = jdbcTemplate.query(sql1.toString(), new RowMapper<StudentDTO>() {
-//        @Override
-//        public StudentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
-//            StudentDTO studentDTO = new StudentDTO();
-//            studentDTO.setId(Integer.valueOf(resultSet.getString("id")));
-//            studentDTO.setStudentId(Integer.valueOf(resultSet.getString("student_id")));
-//            studentDTO.setStudentName(resultSet.getString("student_name"));
-//            return studentDTO;
-//        }
-//    });
-//        System.out.println(list);
+    private List<StudentDTO> copyStudentToCourseTables(String classGradesName){
+        StringBuilder sql1 = new StringBuilder("select * from " + classGradesName + "student;");
+        List<StudentDTO> list = jdbcTemplate.query(sql1.toString(), new RowMapper<StudentDTO>() {
+            @Override
+            public StudentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+                StudentDTO studentDTO = new StudentDTO();
+                studentDTO.setId(Integer.valueOf(resultSet.getString("id")));
+                studentDTO.setStudentId(Integer.valueOf(resultSet.getString("student_id")));
+                studentDTO.setStudentName(resultSet.getString("student_name"));
+                return studentDTO;
+            }
+        });
+        System.out.println(list);
+        return list;
+    }
 }

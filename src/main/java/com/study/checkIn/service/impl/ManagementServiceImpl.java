@@ -148,4 +148,10 @@ public class ManagementServiceImpl implements IManagementService {
     public List<ClassesGrades> managementAddCheckClassGrades(String classGradesName) {
         return classesGradesServiceMapper.findByClassGradesName(classGradesName);
     }
+
+    @Override
+    public List<Course> managementAddAddCheckInTestStep1(String classGradesName) {
+        Integer classId = classesGradesServiceMapper.findByMajor(classGradesName);
+        return courseServiceMapper.findByClassId(classId);
+    }
 }

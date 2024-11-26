@@ -33,12 +33,16 @@
     <input type="text" placeholder="StudentName" id="studentName">
     <button id="submit3">Submit</button>
     <br>
+    <input type="text" placeholder="ClassName" id="classGradesName1">
+    <button id="submit4">Submit</button>
+    <br>
 
 <script inline="javascript">
     let submit = document.getElementById("submit");
     let submit1 = document.getElementById("submit1");
     let submit2 = document.getElementById("submit2");
     let submit3 = document.getElementById("submit3");
+    let submit4 = document.getElementById("submit4");
 
     submit.onclick = function() {
         //Get the value in the box
@@ -91,11 +95,16 @@
                 console.log(data);
             });
 
-<!--        $.get("/managementAdd-course?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal,teacherName:teacherNameVal,courseTime:courseTimeVal-->
+        $.get("/managementAdd-course?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal,teacherName:teacherNameVal,courseTime:courseTimeVal
+            }),function(data){
+                console.log(data);
+            });
+<!--        $.get("/managementAdd-createTableRequest1?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal-->
 <!--            }),function(data){-->
 <!--                console.log(data);-->
 <!--            });-->
-        $.get("/managementAdd-createTableRequest1?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal
+
+        $.get("/managementAdd-createTableRequest2?"+$.param({courseName:courseNameVal,classGradesName:classGradesNameVal
             }),function(data){
                 console.log(data);
             });
@@ -108,6 +117,16 @@
         var studentNameVal = $("#studentName").val();
 
         $.get("/managementAdd-addStudent?"+$.param({classGradesName:majorVal,studentId:studentIdVal,studentName:studentNameVal
+            }),function(data){
+                console.log(data);
+            });
+     }
+
+     submit4.onclick = function() {
+        //Get the value in the box
+        var classGradesNameVal = $("#classGradesName1").val();
+
+        $.get("/managementAdd-addCheckInTestStep1?"+$.param({classGradesName:classGradesNameVal
             }),function(data){
                 console.log(data);
             });
