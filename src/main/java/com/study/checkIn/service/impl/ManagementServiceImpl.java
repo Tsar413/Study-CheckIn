@@ -152,6 +152,14 @@ public class ManagementServiceImpl implements IManagementService {
     @Override
     public List<Course> managementAddAddCheckInTestStep1(String classGradesName) {
         Integer classId = classesGradesServiceMapper.findByMajor(classGradesName);
+        if(classId == null){
+            return null;
+        }
         return courseServiceMapper.findByClassId(classId);
+    }
+
+    @Override
+    public String managementAddAddCheckCourseTable(String classGradesName, String courseName) {
+        return classGradesName + courseName;
     }
 }

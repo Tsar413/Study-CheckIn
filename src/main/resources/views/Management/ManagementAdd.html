@@ -33,8 +33,12 @@
     <input type="text" placeholder="StudentName" id="studentName">
     <button id="submit3">Submit</button>
     <br>
-    <input type="text" placeholder="ClassName" id="classGradesName1">
+    <input type="text" placeholder="ClassName" id="classGradesName1" oninput="checkClassGradesName1(event)">
+    <select id="selectClassGradesName1"></select>
     <button id="submit4">Submit</button>
+    <input type="text" placeholder="Course" id="courseName1">
+    <select id="selectCourseName1"></select>
+    <button id="submit5">Submit</button>
     <br>
 
 <script inline="javascript">
@@ -43,6 +47,7 @@
     let submit2 = document.getElementById("submit2");
     let submit3 = document.getElementById("submit3");
     let submit4 = document.getElementById("submit4");
+    let submit5 = document.getElementById("submit5");
 
     submit.onclick = function() {
         //Get the value in the box
@@ -126,14 +131,37 @@
         //Get the value in the box
         var classGradesNameVal = $("#classGradesName1").val();
 
+        document.getElementById('selectCourseName1').innerHTML = '';
+
         $.get("/managementAdd-addCheckInTestStep1?"+$.param({classGradesName:classGradesNameVal
             }),function(data){
                 console.log(data);
+
+                // 遍历后端数据，为每个数据项创建option元素
+                data.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.courseName;
+                    option.label = item.courseName;
+                    document.getElementById('selectCourseName1').appendChild(option);
+                });
+            });
+     }
+
+     submit5.onclick = function() {
+        //Get the value in the box
+        var classGradesNameVal = $("#classGradesName1").val();
+        var courseNameVal = $("#courseName1").val();
+
+        $.get("/managementAdd-addCheckCourseTable?"+$.param({classGradesName:classGradesNameVal, courseName:courseNameVal
+            }),function(data){
+                console.log(data);
+
             });
      }
 
      var selectTeacherName = document.getElementById('selectTeacherName');
      var selectClassGradesName = document.getElementById('selectClassGradesName');
+     var selectClassGradesName1 = document.getElementById('selectClassGradesName1');
 
      // 为select元素添加change事件监听器
      selectTeacherName.addEventListener('click', function() {
@@ -145,6 +173,18 @@
      selectClassGradesName.addEventListener('click', function() {
          // 当select选项改变时，将选中项的value赋值给文本框
          document.getElementById('classGradesName').value = selectClassGradesName.value;
+     });
+
+         // 为select元素添加change事件监听器
+     selectClassGradesName1.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('classGradesName1').value = selectClassGradesName1.value;
+     });
+
+              // 为select元素添加change事件监听器
+     selectCourseName1.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('courseName1').value = selectCourseName1.value;
      });
 
     function checkTeacherName(event) {
@@ -190,6 +230,30 @@
                 });
             });
     }
+
+    function checkClassGradesName1(event){
+        var input = event.target;
+        // 这里可以添加更多的逻辑，比如验证输入内容
+        //Get the value in the box
+        var classGradesNameVal = $("#classGradesName1").val();
+
+        document.getElementById('selectClassGradesName1').innerHTML = '';
+
+        $.get("/managementAdd-checkClassGrades?"+$.param({classGradesName:classGradesNameVal
+            }),function(data){
+                console.log(data);
+
+                // 遍历后端数据，为每个数据项创建option元素
+                data.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.major;
+                    option.label = item.major;
+                    document.getElementById('selectClassGradesName1').appendChild(option);
+                });
+            });
+
+    }
+
 </script>
 </body>
 </html>

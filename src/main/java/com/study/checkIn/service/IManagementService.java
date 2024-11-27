@@ -24,4 +24,6 @@ public interface IManagementService {
     List<ClassesGrades> managementAddCheckClassGrades(String classGradesName);
 
     List<Course> managementAddAddCheckInTestStep1(String classGradesName);
+
+    String managementAddAddCheckCourseTable(String classGradesName, String courseName);
 }

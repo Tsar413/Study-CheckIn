@@ -91,4 +91,9 @@ public class ManagementAddController {
     public List<Course> managementAddAddCheckInTestStep1(String classGradesName){
         return iManagementService.managementAddAddCheckInTestStep1(classGradesName);
     }
+
+    @GetMapping("/managementAdd-addCheckCourseTable")
+    public String managementAddAddCheckCourseTable(String classGradesName, String courseName){
+        return iManagementService.managementAddAddCheckCourseTable(classGradesName, courseName);
+    }
 }
