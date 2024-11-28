@@ -1,5 +1,6 @@
 package com.study.checkIn.service.impl;
 
+import com.study.checkIn.dto.CreateCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.service.ICreateTableRequestService;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,6 +35,15 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
             sql1.append(studentDTO.getStudentName()).append("');");
             jdbcTemplate.execute(sql1.toString());
         }
+        return 1;
+    }
+
+    @Override
+    public Integer managementAddNewCheckIn(CreateCheckInDTO createCheckInDTO) {
+        StringBuilder sql = new StringBuilder("ALTER TABLE ");
+        sql.append(createCheckInDTO.getTableName()).append(" ADD ");
+        sql.append(createCheckInDTO.getCheckInName()).append(" INT DEFAULT 0");
+        jdbcTemplate.execute(sql.toString());
         return 1;
     }
 

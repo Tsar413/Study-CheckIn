@@ -1,5 +1,6 @@
 package com.study.checkIn.controller;
 
+import com.study.checkIn.dto.CreateCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
@@ -95,5 +96,12 @@ public class ManagementAddController {
     @GetMapping("/managementAdd-addCheckCourseTable")
     public String managementAddAddCheckCourseTable(String classGradesName, String courseName){
         return iManagementService.managementAddAddCheckCourseTable(classGradesName, courseName);
+    }
+
+    @GetMapping("/managementAdd-addNewCheckIn")
+    public String managementAddAddNewCheckIn(String classGradesName, String courseName, String checkInName){
+        System.out.println(iManagementService.managementAddAddCheckCourseTable(classGradesName, courseName));
+        CreateCheckInDTO createCheckInDTO = new CreateCheckInDTO(classGradesName + courseName, checkInName);
+        return String.valueOf(iCreateTableRequestService.managementAddNewCheckIn(createCheckInDTO));
     }
 }

@@ -38,6 +38,7 @@
     <button id="submit4">Submit</button>
     <input type="text" placeholder="Course" id="courseName1">
     <select id="selectCourseName1"></select>
+    <input type="text" placeholder="Check In Name" id="checkInName">
     <button id="submit5">Submit</button>
     <br>
 
@@ -151,8 +152,15 @@
         //Get the value in the box
         var classGradesNameVal = $("#classGradesName1").val();
         var courseNameVal = $("#courseName1").val();
+        var checkInNameVal = $("#checkInName").val();
 
         $.get("/managementAdd-addCheckCourseTable?"+$.param({classGradesName:classGradesNameVal, courseName:courseNameVal
+            }),function(data){
+                console.log(data);
+
+            });
+
+        $.get("/managementAdd-addNewCheckIn?"+$.param({classGradesName:classGradesNameVal, courseName:courseNameVal, checkInName:checkInNameVal
             }),function(data){
                 console.log(data);
 
