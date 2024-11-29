@@ -18,4 +18,7 @@ public interface ClassesGradesServiceMapper extends JpaRepository<ClassesGrades,
 
     @Query(value = "select * from classes_grades where major like %?1%", nativeQuery = true)
     List<ClassesGrades> findByClassGradesName(String classGradesName);
+
+    @Query(value = "select * from classes_grades", nativeQuery = true)
+    List<ClassesGrades> findAllClassGrades();
 }

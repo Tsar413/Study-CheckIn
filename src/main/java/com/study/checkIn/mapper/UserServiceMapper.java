@@ -15,4 +15,7 @@ public interface UserServiceMapper extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from User where privilege = 2 && username like %?1%", nativeQuery = true)
     List<User> findByDiffUsername(String username);
+
+    @Query(value = "select * from User", nativeQuery = true)
+    List<User> findAllUsers();
 }

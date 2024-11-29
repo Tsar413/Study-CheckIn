@@ -6,10 +6,30 @@
   <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
+<button id="submit">Submit</button>
 
 
 <script inline="javascript">
+  let submit = document.getElementById("submit");
+  submit.onclick = function() {
 
+
+        $.get("/management-getAllUsers?"+$.param({
+            }),function(data){
+                console.log(data);
+            });
+
+        $.get("/management-getAllCourses?"+$.param({
+            }),function(data){
+                console.log(data);
+            });
+
+        $.get("/management-getAllClassesGrades?"+$.param({
+            }),function(data){
+                console.log(data);
+            });
+
+    }
 </script>
 </body>
 </html>

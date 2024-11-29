@@ -6,7 +6,7 @@ import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
 import com.study.checkIn.service.ICreateTableRequestService;
-import com.study.checkIn.service.IManagementService;
+import com.study.checkIn.service.IManagementAddService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 public class ManagementAddController {
     @Resource
-    private IManagementService iManagementService;
+    private IManagementAddService iManagementAddService;
 
     @Resource
     private ICreateTableRequestService iCreateTableRequestService;
@@ -29,42 +29,42 @@ public class ManagementAddController {
 
     @GetMapping("/managementAdd-userTest")
     public User managementAddUserTest(String username, String password, String privilege){
-        return iManagementService.managementAddUserTest(username, password, privilege);
+        return iManagementAddService.managementAddUserTest(username, password, privilege);
     }
 
     @GetMapping("/managementAdd-user")
     public String managementAddUser(String username, String password, String privilege){
-        return iManagementService.managementAddUser(username, password, privilege);
+        return iManagementAddService.managementAddUser(username, password, privilege);
     }
 
     @GetMapping("/managementAdd-classTest")
     public ClassesGrades managementAddClassTest(String classId, String major, String studentNumber){
-        return iManagementService.managementAddClassTest(classId, major, studentNumber);
+        return iManagementAddService.managementAddClassTest(classId, major, studentNumber);
     }
 
     @GetMapping("/managementAdd-class")
     public String managementAddClass(String classId, String major, String studentNumber){
-        return iManagementService.managementAddClass(classId, major, studentNumber);
+        return iManagementAddService.managementAddClass(classId, major, studentNumber);
     }
 
     @GetMapping("/managementAdd-courseTest")
     public Course managementAddCourseTest(String courseName, String classGradesName, String teacherName, String courseTime){
-        return iManagementService.managementAddCourseTest(courseName, classGradesName, teacherName, courseTime);
+        return iManagementAddService.managementAddCourseTest(courseName, classGradesName, teacherName, courseTime);
     }
 
     @GetMapping("/managementAdd-course")
     public String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime){
-        return iManagementService.managementAddCourse(courseName, classGradesName, teacherName, courseTime);
+        return iManagementAddService.managementAddCourse(courseName, classGradesName, teacherName, courseTime);
     }
 
     @GetMapping("/managementAdd-checkTeacher")
     public List<User> managementAddCheckTeacher(String teacherName){
-        return iManagementService.managementAddCheckTeacher(teacherName);
+        return iManagementAddService.managementAddCheckTeacher(teacherName);
     }
 
     @GetMapping("/managementAdd-checkClassGrades")
     public List<ClassesGrades> managementAddCheckClassGrades(String classGradesName){
-        return iManagementService.managementAddCheckClassGrades(classGradesName);
+        return iManagementAddService.managementAddCheckClassGrades(classGradesName);
     }
 
     @GetMapping("/managementAdd-createTableRequest1")
@@ -90,17 +90,17 @@ public class ManagementAddController {
 
     @GetMapping("/managementAdd-addCheckInTestStep1")
     public List<Course> managementAddAddCheckInTestStep1(String classGradesName){
-        return iManagementService.managementAddAddCheckInTestStep1(classGradesName);
+        return iManagementAddService.managementAddAddCheckInTestStep1(classGradesName);
     }
 
     @GetMapping("/managementAdd-addCheckCourseTable")
     public String managementAddAddCheckCourseTable(String classGradesName, String courseName){
-        return iManagementService.managementAddAddCheckCourseTable(classGradesName, courseName);
+        return iManagementAddService.managementAddAddCheckCourseTable(classGradesName, courseName);
     }
 
     @GetMapping("/managementAdd-addNewCheckIn")
     public String managementAddAddNewCheckIn(String classGradesName, String courseName, String checkInName){
-        System.out.println(iManagementService.managementAddAddCheckCourseTable(classGradesName, courseName));
+        System.out.println(iManagementAddService.managementAddAddCheckCourseTable(classGradesName, courseName));
         CreateCheckInDTO createCheckInDTO = new CreateCheckInDTO(classGradesName + courseName, checkInName);
         return String.valueOf(iCreateTableRequestService.managementAddNewCheckIn(createCheckInDTO));
     }

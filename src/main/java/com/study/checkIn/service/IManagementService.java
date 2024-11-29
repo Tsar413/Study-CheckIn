@@ -7,23 +7,9 @@ import com.study.checkIn.entity.User;
 import java.util.List;
 
 public interface IManagementService {
-    User managementAddUserTest(String username, String password, String privilege);
+    List<User> managementGetAllUsers();
 
-    String managementAddUser(String username, String password, String privilege);
+    List<Course> managementGetAllCourses();
 
-    ClassesGrades managementAddClassTest(String classId, String major, String studentNumber);
-
-    String managementAddClass(String classId, String major, String studentNumber);
-
-    Course managementAddCourseTest(String courseName, String classGradesName, String teacherName, String courseTime);
-
-    String managementAddCourse(String courseName, String classGradesName, String teacherName, String courseTime);
-
-    List<User> managementAddCheckTeacher(String teacherName);
-
-    List<ClassesGrades> managementAddCheckClassGrades(String classGradesName);
-
-    List<Course> managementAddAddCheckInTestStep1(String classGradesName);
-
-    String managementAddAddCheckCourseTable(String classGradesName, String courseName);
+    List<ClassesGrades> managementGetAllClassesGrades();
 }
