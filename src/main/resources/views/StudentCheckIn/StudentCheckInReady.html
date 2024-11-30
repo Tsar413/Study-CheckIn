@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudentCheckInReady</title>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" placeholder="Check In URL" id="checkInURL">
+    <button id="submit">Submit</button>
+
+    <script inline="javascript">
+      let submit = document.getElementById("submit");
+
+      submit.onclick = function() {
+          //Get the value in the box
+          var checkInURLVal = $("#checkInURL").val();
+
+          $.get("/studentCheckInReady-testURL?"+$.param({checkInURL:checkInURLVal
+              }),function(data){
+                  console.log(data);
+              });
+
+          $.get("/studentCheckInReady-divideURL?"+$.param({checkInURL:checkInURLVal
+              }),function(data){
+                  console.log(data);
+              });
+
+      }
+    </script>
+</body>
+</html>
