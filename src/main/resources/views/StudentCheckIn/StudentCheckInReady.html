@@ -24,6 +24,10 @@
           $.get("/studentCheckInReady-divideURL?"+$.param({checkInURL:checkInURLVal
               }),function(data){
                   console.log(data);
+
+                  var data1 = {username:data.query.username,password:data.query.password,query:data.query.privilege};
+                  sessionStorage.setItem('detail', JSON.stringify(data1));
+                  window.location.href = 'studentCheckIn';
               });
 
       }

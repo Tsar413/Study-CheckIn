@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>StudentCheckIn</title>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<input type="text" placeholder="Major" id="major">
+<input type="text" placeholder="Course Name" id="courseName">
+<input type="text" placeholder="CheckIn Name" id="checkInName">
+<input type="text" placeholder="Student Name" id="studentName">
+<input type="text" placeholder="Student Id" id="studentId">
+<button id="submit">Submit</button>
+
+<script inline="javascript">
+    window.onload = showDetail;
+
+    function showDetail() {
+        var data = JSON.parse(sessionStorage.getItem('detail'));
+        console.log(data);
+        console.log(data.username);
+    }
+
+    let submit = document.getElementById("submit");
+
+    submit.onclick = function() {
+         //Get the value in the box
+          var majorVal = $("#major").val();
+          var courseNameVal = $("#courseName").val();
+          var checkInNameVal = $("#checkInName").val();
+          var studentNameVal = $("#studentName").val();
+          var studentIdVal = $("#studentId").val();
+
+          $.get("/studentCheckIn-testCheckIn?"+$.param({major:majorVal, courseName:courseNameVal, checkInName:checkInNameVal, studentName:studentNameVal, studentId:studentIdVal
+              }),function(data){
+                  console.log(data);
+              });
+
+      }
+</script>
+</body>
+</html>
