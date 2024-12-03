@@ -18,4 +18,7 @@ public interface CourseServiceMapper  extends JpaRepository<Course, Integer> {
 
     @Query(value = "select * from Course", nativeQuery = true)
     List<Course> findAllCourses();
+
+    @Query(value = "select * from course where teacher_id = ?1", nativeQuery = true)
+    List<Course> findByTeacherId(Integer teacherId);
 }

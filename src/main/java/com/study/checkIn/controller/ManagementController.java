@@ -3,6 +3,7 @@ package com.study.checkIn.controller;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
+import com.study.checkIn.service.IManagementAddService;
 import com.study.checkIn.service.IManagementService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ import java.util.List;
 public class ManagementController {
     @Resource
     private IManagementService iManagementService;
+
+    @Resource
+    private IManagementAddService iManagementAddService;
 
     @GetMapping("/management")
     public ModelAndView showAHtml() {
@@ -34,5 +38,15 @@ public class ManagementController {
     @GetMapping("/management-getAllClassesGrades")
     public List<ClassesGrades> managementGetAllClassesGrades(){
         return iManagementService.managementGetAllClassesGrades();
+    }
+
+    @GetMapping("/management-checkTeacher")
+    public List<User> managementCheckTeacher(String teacherName){
+        return iManagementAddService.managementAddCheckTeacher(teacherName);
+    }
+
+    @GetMapping("/management-checkCourses")
+    public List<Course> managementCheckCourses(String teacherName){
+        return iManagementService.managementCheckCourseNames(teacherName);
     }
 }

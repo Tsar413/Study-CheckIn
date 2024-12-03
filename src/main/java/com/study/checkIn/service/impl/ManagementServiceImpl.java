@@ -10,6 +10,7 @@ import com.study.checkIn.service.IManagementService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.beans.Transient;
 import java.util.List;
 
 @Service
@@ -36,5 +37,16 @@ public class ManagementServiceImpl implements IManagementService {
     @Override
     public List<ClassesGrades> managementGetAllClassesGrades() {
         return classesGradesServiceMapper.findAllClassGrades();
+    }
+
+    @Override
+    public List<Course> managementCheckCourseNames(String teacherName) {
+        Integer userId = userServiceMapper.findBiggestUsername(teacherName);
+        if(userId != null){
+            List<Course> result = courseServiceMapper.findByTeacherId(userId);
+            System.out.println(result);
+            return result;
+        }
+        return null;
     }
 }

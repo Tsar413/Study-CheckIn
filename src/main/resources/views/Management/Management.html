@@ -6,11 +6,24 @@
   <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body>
+<label>Check All Information</label>
 <button id="submit">Submit</button>
+<br>
+<label>Check URLs</label>
+<input type="text" placeholder="Teacher Name" id="teacherName" oninput="checkTeacherName(event)">
+<select id="selectTeacherName"></select>
+<button id="submit1">Submit</button>
+<input type="text" placeholder="Course Name" id="courseName">
+<select id="selectCoursesName"></select>
+<button id="submit2">Submit</button>
+<input type="text" placeholder="Class Name" id="classGradesName" >
+<button id="submit3">Submit</button>
+<br>
 
 
 <script inline="javascript">
   let submit = document.getElementById("submit");
+  let submit1 = document.getElementById("submit1");
   submit.onclick = function() {
 
 
@@ -30,6 +43,68 @@
             });
 
     }
+
+    submit1.onclick = function() {
+
+        var teacherNameVal = $("#teacherName").val();
+
+        document.getElementById('selectCoursesName').innerHTML = '';
+
+        $.get("/management-checkCourses?"+$.param({teacherName:teacherNameVal
+            }),function(data){
+                console.log(data);
+
+                if(data !== ""){
+                  // 遍历后端数据，为每个数据项创建option元素
+                  data.forEach(item => {
+                      var option = document.createElement('option');
+                      option.value = item.courseName;
+                      option.label = item.courseName;
+                      document.getElementById('selectCoursesName').appendChild(option);
+                  });
+                }
+
+            });
+
+    }
+
+     var selectTeacherName = document.getElementById('selectTeacherName');
+     var selectCoursesName = document.getElementById('selectCoursesName');
+
+     // 为select元素添加change事件监听器
+     selectTeacherName.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('teacherName').value = selectTeacherName.value;
+     });
+
+     // 为select元素添加change事件监听器
+     selectCoursesName.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('courseName').value = selectCoursesName.value;
+     });
+
+     function checkTeacherName(event) {
+        var input = event.target;
+        // 这里可以添加更多的逻辑，比如验证输入内容
+        //Get the value in the box
+        var teacherNameVal = $("#teacherName").val();
+
+        document.getElementById('selectTeacherName').innerHTML = '';
+
+        $.get("/managementAdd-checkTeacher?"+$.param({teacherName:teacherNameVal
+            }),function(data){
+                console.log(data);
+
+                // 遍历后端数据，为每个数据项创建option元素
+                data.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.username;
+                    option.label = item.username;
+                    document.getElementById('selectTeacherName').appendChild(option);
+                });
+            });
+     }
+
 </script>
 </body>
 </html>

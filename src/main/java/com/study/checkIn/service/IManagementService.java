@@ -12,4 +12,6 @@ public interface IManagementService {
     List<Course> managementGetAllCourses();
 
     List<ClassesGrades> managementGetAllClassesGrades();
+
+    List<Course> managementCheckCourseNames(String teacherName);
 }

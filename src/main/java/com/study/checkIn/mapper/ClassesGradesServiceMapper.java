@@ -21,4 +21,7 @@ public interface ClassesGradesServiceMapper extends JpaRepository<ClassesGrades,
 
     @Query(value = "select * from classes_grades", nativeQuery = true)
     List<ClassesGrades> findAllClassGrades();
+
+    @Query(value = "select * from classes_grades where class_id = ?1", nativeQuery = true)
+    List<ClassesGrades> findByClassId(Integer classGradesId);
 }
