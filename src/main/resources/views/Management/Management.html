@@ -17,13 +17,19 @@
 <select id="selectCoursesName"></select>
 <button id="submit2">Submit</button>
 <input type="text" placeholder="Class Name" id="classGradesName" >
+<select id="selectClassGradesName"></select>
 <button id="submit3">Submit</button>
+<input type="text" placeholder="Class Name" id="checkInName" >
+<select id="selectCheckInName"></select>
+<button id="submit4">Submit</button>
 <br>
 
 
 <script inline="javascript">
   let submit = document.getElementById("submit");
   let submit1 = document.getElementById("submit1");
+  let submit2 = document.getElementById("submit2");
+  let submit3 = document.getElementById("submit3");
   submit.onclick = function() {
 
 
@@ -68,8 +74,60 @@
 
     }
 
+    submit2.onclick = function() {
+
+        var teacherNameVal = $("#teacherName").val();
+        var courseNameVal = $("#courseName").val();
+
+        document.getElementById('selectClassGradesName').innerHTML = '';
+
+        $.get("/management-checkTeacherCourses?"+$.param({teacherName:teacherNameVal, courses:courseNameVal
+            }),function(data){
+                console.log(data);
+
+                if(data !== ""){
+                  // 遍历后端数据，为每个数据项创建option元素
+                  data.forEach(item => {
+                      var option = document.createElement('option');
+                      option.value = item.major;
+                      option.label = item.major;
+                      document.getElementById('selectClassGradesName').appendChild(option);
+                  });
+                }
+
+            });
+
+    }
+
+    submit3.onclick = function() {
+
+        var classGradesNameVal = $("#classGradesName").val();
+        var courseNameVal = $("#courseName").val();
+
+        document.getElementById('selectCheckInName').innerHTML = '';
+
+        $.get("/management-checkCheckIn?"+$.param({classGradesName:classGradesNameVal, courses:courseNameVal
+            }),function(data){
+                console.log(data);
+
+                if(data !== ""){
+                  // 遍历后端数据，为每个数据项创建option元素
+                  data.forEach(item => {
+                      var option = document.createElement('option');
+                      option.value = item;
+                      option.label = item;
+                      document.getElementById('selectCheckInName').appendChild(option);
+                  });
+                }
+
+            });
+
+    }
+
      var selectTeacherName = document.getElementById('selectTeacherName');
      var selectCoursesName = document.getElementById('selectCoursesName');
+     var selectClassGradesName = document.getElementById('selectClassGradesName');
+     var selectCheckInName = document.getElementById('selectCheckInName');
 
      // 为select元素添加change事件监听器
      selectTeacherName.addEventListener('click', function() {
@@ -81,6 +139,18 @@
      selectCoursesName.addEventListener('click', function() {
          // 当select选项改变时，将选中项的value赋值给文本框
          document.getElementById('courseName').value = selectCoursesName.value;
+     });
+
+     // 为select元素添加change事件监听器
+     selectClassGradesName.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('classGradesName').value = selectClassGradesName.value;
+     });
+
+     // 为select元素添加change事件监听器
+     selectCheckInName.addEventListener('click', function() {
+         // 当select选项改变时，将选中项的value赋值给文本框
+         document.getElementById('checkInName').value = selectCheckInName.value;
      });
 
      function checkTeacherName(event) {

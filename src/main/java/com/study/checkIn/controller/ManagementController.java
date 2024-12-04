@@ -49,4 +49,14 @@ public class ManagementController {
     public List<Course> managementCheckCourses(String teacherName){
         return iManagementService.managementCheckCourseNames(teacherName);
     }
+
+    @GetMapping("/management-checkTeacherCourses")
+    public List<ClassesGrades> managementCheckTeacherCourses(String teacherName, String courses){
+        return iManagementService.managementCheckTeacherCourses(teacherName, courses);
+    }
+
+    @GetMapping("/management-checkCheckIn")
+    public List<String> managementCheckCheckIn(String classGradesName, String courses){
+        return iManagementService.managementCheckCheckIn(classGradesName, courses);
+    }
 }

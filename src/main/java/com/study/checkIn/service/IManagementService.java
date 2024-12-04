@@ -9,9 +9,13 @@ import java.util.List;
 public interface IManagementService {
     List<User> managementGetAllUsers();
 
-    List<Course> managementGetAllCourses();
+        List<Course> managementGetAllCourses();
 
     List<ClassesGrades> managementGetAllClassesGrades();
 
     List<Course> managementCheckCourseNames(String teacherName);
+
+    List<ClassesGrades> managementCheckTeacherCourses(String teacherName, String courses);
+
+    List<String> managementCheckCheckIn(String classGradeName, String courses);
 }
