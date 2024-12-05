@@ -19,7 +19,10 @@
     function showDetail() {
         var data = JSON.parse(sessionStorage.getItem('detail'));
         console.log(data);
-        console.log(data.username);
+        console.log(data.courses);
+        document.getElementById("courseName").value = data.courses;
+        document.getElementById("checkInName").value = data.checkInName;
+        document.getElementById("major").value = data.classGradesName;
     }
 
     let submit = document.getElementById("submit");

@@ -30,6 +30,7 @@
   let submit1 = document.getElementById("submit1");
   let submit2 = document.getElementById("submit2");
   let submit3 = document.getElementById("submit3");
+  let submit4 = document.getElementById("submit4");
   submit.onclick = function() {
 
 
@@ -119,6 +120,22 @@
                       document.getElementById('selectCheckInName').appendChild(option);
                   });
                 }
+
+            });
+
+    }
+
+    submit4.onclick = function() {
+
+        var classGradesNameVal = $("#classGradesName").val();
+        var courseNameVal = $("#courseName").val();
+        var checkInNameVal = $("#checkInName").val();
+
+        $.get("/management-getCheckInURL?"+$.param({classGradesName:classGradesNameVal, courses:courseNameVal, checkInName:checkInNameVal
+            }),function(data){
+                console.log(data);
+
+
 
             });
 

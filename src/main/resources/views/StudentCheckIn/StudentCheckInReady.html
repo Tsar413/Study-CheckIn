@@ -25,7 +25,7 @@
               }),function(data){
                   console.log(data);
 
-                  var data1 = {username:data.query.username,password:data.query.password,query:data.query.privilege};
+                  var data1 = {courses:data.query.courses,checkInName:data.query.checkInName,classGradesName:data.query.classGradesName};
                   sessionStorage.setItem('detail', JSON.stringify(data1));
                   window.location.href = 'studentCheckIn';
               });

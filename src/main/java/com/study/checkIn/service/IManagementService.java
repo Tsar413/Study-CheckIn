@@ -18,4 +18,6 @@ public interface IManagementService {
     List<ClassesGrades> managementCheckTeacherCourses(String teacherName, String courses);
 
     List<String> managementCheckCheckIn(String classGradeName, String courses);
+
+    String managementGetCheckInURL(String classGradesName, String courses, String checkInName);
 }

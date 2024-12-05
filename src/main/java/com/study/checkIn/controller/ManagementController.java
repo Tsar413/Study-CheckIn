@@ -59,4 +59,9 @@ public class ManagementController {
     public List<String> managementCheckCheckIn(String classGradesName, String courses){
         return iManagementService.managementCheckCheckIn(classGradesName, courses);
     }
+
+    @GetMapping("/management-getCheckInURL")
+    public String managementGetCheckInURL(String classGradesName, String courses, String checkInName){
+        return iManagementService.managementGetCheckInURL(classGradesName, courses, checkInName);
+    }
 }

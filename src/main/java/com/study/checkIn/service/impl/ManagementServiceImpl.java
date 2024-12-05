@@ -1,6 +1,5 @@
 package com.study.checkIn.service.impl;
 
-import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
@@ -9,6 +8,7 @@ import com.study.checkIn.mapper.CourseServiceMapper;
 import com.study.checkIn.mapper.UserServiceMapper;
 import com.study.checkIn.service.IManagementService;
 import com.study.checkIn.utils.SQLConstants;
+import com.study.checkIn.utils.URLConstants;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -88,5 +88,12 @@ public class ManagementServiceImpl implements IManagementService {
         });
         System.out.println(list);
         return list;
+    }
+
+    @Override
+    public String managementGetCheckInURL(String classGradesName, String courses, String checkInName) {
+        String result = URLConstants.URL1 + URLConstants.URL2 + classGradesName + URLConstants.URL3 +
+                courses + URLConstants.URL4 + checkInName;
+        return result;
     }
 }
