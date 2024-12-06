@@ -40,6 +40,11 @@
                   console.log(data);
               });
 
+          $.get("/studentCheckIn-checkIn?"+$.param({major:majorVal, courseName:courseNameVal, checkInName:checkInNameVal, studentName:studentNameVal, studentId:studentIdVal
+              }),function(data){
+                  console.log(data);
+              });
+
       }
 </script>
 </body>

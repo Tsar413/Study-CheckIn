@@ -9,4 +9,6 @@ public interface IStudentCheckInService {
     CheckInURLDTO studyCheckInReadyDivideURL(String checkInURL);
 
     String studentCheckInTestCheckIn(String major, String courseName, String checkInName, String studentName, String studentId);
+
+    String studentCheckInCheckIn(String major, String courseName, String checkInName, String studentName, String studentId);
 }
