@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TeacherManagement</title>
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<label>Check URLs</label>
+<input type="text" placeholder="Teacher Name" id="teacherName">
+<input type="text" placeholder="Course Name" id="courseName">
+<input type="text" placeholder="Class Name" id="classGradesName" >
+<input type="text" placeholder="Class Name" id="checkInName" >
+<button id="submit1">Submit</button>
+<button id="submit2">Submit</button>
+<br>
+
+
+<script inline="javascript">
+    let submit = document.getElementById("submit1");
+
+    submit1.onclick = function() {
+          //Get the value in the box
+          var teacherNameVal = $("#teacherName").val();
+          var courseNameVal = $("#courseName").val();
+          var classGradesNameVal = $("#classGradesName").val();
+          var checkInNameVal = $("#checkInName").val();
+
+          $.get("/managementAdd-checkInTest?"+$.param({teacherName:teacherNameVal,courseName:courseNameVal,classGradesName:classGradesNameVal,checkInName:checkInNameVal
+              }),function(data){
+                  console.log(data);
+              });
+    }
+</script>
+</body>
+</html>
