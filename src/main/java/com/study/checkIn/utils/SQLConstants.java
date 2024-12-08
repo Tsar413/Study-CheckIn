@@ -24,4 +24,16 @@ public class SQLConstants {
     public static final String CHECK_CHECK_IN_STUDENTS_SQL6 = "` set `";
 
     public static final String CHECK_CHECK_IN_STUDENTS_SQL7 = "` = 1 where student_id = '";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL8 = "select count(*) from `";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL9 = "`;";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL10 = "` where `";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL11 = "` = 1;";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL12 = "` = 0;";
+
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL13 = "select student_name from `";
 }
