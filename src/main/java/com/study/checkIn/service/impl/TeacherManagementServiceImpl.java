@@ -44,7 +44,7 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
             return null;
         }
         checkInResultDTO.setNotCheckInNumber(notCheckInNumber);
-        checkInResultDTO.setNotCheckInStudentList(getNotCheckInSList(classGradesName, courseName, checkInName));
+        checkInResultDTO.setNotCheckInStudentList(getNotCheckInList(classGradesName, courseName, checkInName));
         System.out.println(checkInResultDTO);
         return checkInResultDTO;
     }
@@ -87,7 +87,7 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
         return result;
     }
 
-    private List<String> getNotCheckInSList(String classGradesName, String courseName, String checkInName){
+    private List<String> getNotCheckInList(String classGradesName, String courseName, String checkInName){
         String sql1 = SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL13 + classGradesName + courseName +
                 SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL10 + checkInName +
                 SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL12;

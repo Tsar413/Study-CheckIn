@@ -3,10 +3,12 @@ package com.study.checkIn.service.impl;
 import com.study.checkIn.dto.CreateCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.service.ICreateTableRequestService;
+import com.study.checkIn.utils.CreateNewCheckIn;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -19,17 +21,20 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Resource
+    private CreateNewCheckIn createNewCheckIn;
+
     @Override
     public Integer managementAddCreateTableRequest2(String courseName, String classGradesName) {
-        StringBuilder sql = new StringBuilder("CREATE TABLE ");
-        sql.append(classGradesName).append(courseName).append(" (");
+        StringBuilder sql = new StringBuilder("CREATE TABLE `");
+        sql.append(classGradesName).append(courseName).append("` (");
         sql.append("id INT Primary Key,").append("student_id INT,")
                 .append("student_name varchar(20));");
         jdbcTemplate.execute(sql.toString());
         List<StudentDTO> list = copyStudentToCourseTables(classGradesName);
         for (StudentDTO studentDTO : list){
-            StringBuilder sql1 = new StringBuilder("INSERT INTO ");
-            sql1.append(classGradesName).append(courseName).append(" values (");
+            StringBuilder sql1 = new StringBuilder("INSERT INTO `");
+            sql1.append(classGradesName).append(courseName).append("` values (");
             sql1.append(getBiggestStudentTableId(classGradesName + courseName)).append(",");
             sql1.append(studentDTO.getStudentId()).append(", '");
             sql1.append(studentDTO.getStudentName()).append("');");
@@ -40,17 +45,13 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
 
     @Override
     public Integer managementAddNewCheckIn(CreateCheckInDTO createCheckInDTO) {
-        StringBuilder sql = new StringBuilder("ALTER TABLE ");
-        sql.append(createCheckInDTO.getTableName()).append(" ADD ");
-        sql.append(createCheckInDTO.getCheckInName()).append(" INT DEFAULT 0");
-        jdbcTemplate.execute(sql.toString());
-        return 1;
+        return createNewCheckIn.createNewCheckIn(createCheckInDTO);
     }
 
     @Override
     public Integer managementAddCreateTableRequest1(String tableName) {
-        StringBuilder sql = new StringBuilder("CREATE TABLE ");
-        sql.append(tableName).append(" (");
+        StringBuilder sql = new StringBuilder("CREATE TABLE `");
+        sql.append(tableName).append("` (");
         sql.append("id INT Primary Key,").append("student_id INT,")
                 .append("student_name varchar(20));");
         jdbcTemplate.execute(sql.toString());
@@ -59,8 +60,8 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
 
     @Override
     public Integer managementAddAddStudent(StudentDTO studentDTO) {
-        StringBuilder sql = new StringBuilder("INSERT INTO ");
-        sql.append(studentDTO.getStudentClassGradesName()).append(" values (");
+        StringBuilder sql = new StringBuilder("INSERT INTO `");
+        sql.append(studentDTO.getStudentClassGradesName()).append("` values (");
         sql.append(getBiggestStudentTableId(studentDTO.getStudentClassGradesName())).append(",");
         sql.append(studentDTO.getStudentId()).append(", '");
         sql.append(studentDTO.getStudentName()).append("');");
@@ -69,8 +70,8 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
     }
 
     private Integer getBiggestStudentTableId(String studentTableName){
-        StringBuilder sql = new StringBuilder("select max(id) from ");
-        sql.append(studentTableName).append(";");
+        StringBuilder sql = new StringBuilder("select max(id) from `");
+        sql.append(studentTableName).append("`;");
         Integer result = jdbcTemplate.queryForObject(sql.toString(), Integer.class);
         if(result == null){
             return 0;
@@ -79,7 +80,7 @@ public class CreateTableRequestServiceImpl implements ICreateTableRequestService
     }
 
     private List<StudentDTO> copyStudentToCourseTables(String classGradesName){
-        StringBuilder sql1 = new StringBuilder("select * from " + classGradesName + "student;");
+        StringBuilder sql1 = new StringBuilder("select * from `" + classGradesName + "student`;");
         List<StudentDTO> list = jdbcTemplate.query(sql1.toString(), new RowMapper<StudentDTO>() {
             @Override
             public StudentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
