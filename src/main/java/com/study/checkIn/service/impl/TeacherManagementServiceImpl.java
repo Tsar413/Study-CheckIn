@@ -2,13 +2,17 @@ package com.study.checkIn.service.impl;
 
 import com.study.checkIn.dto.CheckInResultDTO;
 import com.study.checkIn.dto.StudentDTO;
+import com.study.checkIn.entity.ClassesGrades;
+import com.study.checkIn.entity.Course;
 import com.study.checkIn.service.ITeacherManagementService;
+import com.study.checkIn.utils.GetStudyDetails;
 import com.study.checkIn.utils.SQLConstants;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +25,9 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
     public TeacherManagementServiceImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    @Resource
+    private GetStudyDetails getStudyDetails;
 
     @Override
     public CheckInResultDTO managementCheckInTest(String teacherName, String courseName, String classGradesName, String checkInName) {
@@ -47,6 +54,16 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
         checkInResultDTO.setNotCheckInStudentList(getNotCheckInList(classGradesName, courseName, checkInName));
         System.out.println(checkInResultDTO);
         return checkInResultDTO;
+    }
+
+    @Override
+    public List<Course> teacherManagementCheckInCourses(String teacherName) {
+        return getStudyDetails.getCourseNames(teacherName);
+    }
+
+    @Override
+    public List<ClassesGrades> teacherManagementCheckInClassGrades(String teacherName, String courseName) {
+        return getStudyDetails.getTeacherCourses(teacherName, courseName);
     }
 
     private Integer getStudentNumber(String classGradesName, String courseName){
