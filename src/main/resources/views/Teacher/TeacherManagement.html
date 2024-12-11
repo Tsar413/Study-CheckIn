@@ -21,12 +21,16 @@
 <input type="text" placeholder="Add New Check In" id="newCheckInName" >
 <button id="submit2">Submit</button>
 <br>
+<table id="studentList" border="1">
 
+</table>
 
 <script inline="javascript">
     let submit1 = document.getElementById("submit1");
     let submit = document.getElementById("submit");
     let submit3 = document.getElementById("submit3");
+    let submit4 = document.getElementById("submit4");
+    let submit2 = document.getElementById("submit2");
 
     submit1.onclick = function() {
           //Get the value in the box
@@ -35,9 +39,22 @@
           var classGradesNameVal = $("#classGradesName").val();
           var checkInNameVal = $("#checkInName").val();
 
+          document.getElementById('studentList').innerHTML = '';
+
+          var str1 = "<tr><th>Name</th><th>Course</th><th>Major</th><th>Check In Name</th><th>Change Situation</th></tr>";
+          $("#studentList").append(str1);
+
           $.get("/teacherManagement-checkInTest?"+$.param({teacherName:teacherNameVal,courseName:courseNameVal,classGradesName:classGradesNameVal,checkInName:checkInNameVal
               }),function(data){
                   console.log(data);
+
+                  var str = "";
+                  for (var i = 0; i < data.notCheckInStudentList.length; i++) {
+                      str = "<tr><td>" + data.notCheckInStudentList[i] + "</td><td>" + data.courseName + "</td> " +
+                      "<td>" + data.classGradesName + "</td><td>" + data.checkInName + "</td>" +
+                      "<td>Change Situation</td></tr>"
+                      $("#studentList").append(str);
+                  }
               });
     }
 
@@ -82,12 +99,62 @@
               });
     }
 
+    submit4.onclick = function() {
+          //Get the value in the box
+          var courseNameVal = $("#courseName").val();
+          var classGradesNameVal = $("#classGradesName").val();
+
+          document.getElementById('selectCheckInName').innerHTML = '';
+
+          $.get("/teacherManagement-checkInCheckInName?"+$.param({classGradesName:classGradesNameVal,courseName:courseNameVal
+              }),function(data){
+                  console.log(data);
+
+                  // 遍历后端数据，为每个数据项创建option元素
+                  data.forEach(item => {
+                      var option = document.createElement('option');
+                      option.value = item;
+                      option.label = item;
+                      document.getElementById('selectCheckInName').appendChild(option);
+                  });
+              });
+    }
+
+    submit2.onclick = function() {
+        //Get the value in the box
+        var classGradesNameVal = $("#classGradesName").val();
+        var courseNameVal = $("#courseName").val();
+        var checkInNameVal = $("#newCheckInName").val();
+
+        $.get("/teacherManagement-addNewCheckIn?"+$.param({classGradesName:classGradesNameVal, courseName:courseNameVal, checkInName:checkInNameVal
+            }),function(data){
+                console.log(data);
+
+            });
+    }
+
     var selectCourseName = document.getElementById('selectCourseName');
 
     // 为select元素添加change事件监听器
     selectCourseName.addEventListener('click', function() {
         // 当select选项改变时，将选中项的value赋值给文本框
         document.getElementById('courseName').value =  selectCourseName.value;
+    });
+
+    var selectClassGradesName = document.getElementById('selectClassGradesName');
+
+    // 为select元素添加change事件监听器
+    selectClassGradesName.addEventListener('click', function() {
+        // 当select选项改变时，将选中项的value赋值给文本框
+        document.getElementById('classGradesName').value =  selectClassGradesName.value;
+    });
+
+    var selectCheckInName = document.getElementById('selectCheckInName');
+
+    // 为select元素添加change事件监听器
+    selectCheckInName.addEventListener('click', function() {
+        // 当select选项改变时，将选中项的value赋值给文本框
+        document.getElementById('checkInName').value =  selectCheckInName.value;
     });
 </script>
 </body>

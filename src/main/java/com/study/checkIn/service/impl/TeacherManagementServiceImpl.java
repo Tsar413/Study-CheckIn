@@ -1,10 +1,12 @@
 package com.study.checkIn.service.impl;
 
 import com.study.checkIn.dto.CheckInResultDTO;
+import com.study.checkIn.dto.CreateCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.service.ITeacherManagementService;
+import com.study.checkIn.utils.CreateNewCheckIn;
 import com.study.checkIn.utils.GetStudyDetails;
 import com.study.checkIn.utils.SQLConstants;
 import org.springframework.dao.DataAccessException;
@@ -28,6 +30,9 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
 
     @Resource
     private GetStudyDetails getStudyDetails;
+
+    @Resource
+    private CreateNewCheckIn createNewCheckIn;
 
     @Override
     public CheckInResultDTO managementCheckInTest(String teacherName, String courseName, String classGradesName, String checkInName) {
@@ -64,6 +69,16 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
     @Override
     public List<ClassesGrades> teacherManagementCheckInClassGrades(String teacherName, String courseName) {
         return getStudyDetails.getTeacherCourses(teacherName, courseName);
+    }
+
+    @Override
+    public List<String> teacherManagementCheckInCheckInName(String classGradesName, String courseName) {
+        return getStudyDetails.getCheckIn(classGradesName, courseName);
+    }
+
+    @Override
+    public String teacherManagementAddNewCheckIn(CreateCheckInDTO createCheckInDTO) {
+        return String.valueOf(createNewCheckIn.createNewCheckIn(createCheckInDTO));
     }
 
     private Integer getStudentNumber(String classGradesName, String courseName){

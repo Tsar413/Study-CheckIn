@@ -1,6 +1,7 @@
 package com.study.checkIn.controller;
 
 import com.study.checkIn.dto.CheckInResultDTO;
+import com.study.checkIn.dto.CreateCheckInDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 import com.study.checkIn.entity.User;
@@ -35,5 +36,16 @@ public class TeacherManagementController {
     @GetMapping("/teacherManagement-checkInClassGrades")
     public List<ClassesGrades> teacherManagementCheckInClassGrades(String teacherName, String courseName){
         return iTeacherManagementService.teacherManagementCheckInClassGrades(teacherName, courseName);
+    }
+
+    @GetMapping("/teacherManagement-checkInCheckInName")
+    public List<String> teacherManagementCheckInCheckInName(String classGradesName, String courseName){
+        return iTeacherManagementService.teacherManagementCheckInCheckInName(classGradesName, courseName);
+    }
+
+    @GetMapping("/teacherManagement-addNewCheckIn")
+    public String teacherManagementAddNewCheckIn(String classGradesName, String courseName, String checkInName){
+        CreateCheckInDTO createCheckInDTO = new CreateCheckInDTO(classGradesName + courseName, checkInName);
+        return iTeacherManagementService.teacherManagementAddNewCheckIn(createCheckInDTO);
     }
 }
