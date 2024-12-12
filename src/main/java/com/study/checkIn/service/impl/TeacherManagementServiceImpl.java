@@ -2,6 +2,7 @@ package com.study.checkIn.service.impl;
 
 import com.study.checkIn.dto.CheckInResultDTO;
 import com.study.checkIn.dto.CreateCheckInDTO;
+import com.study.checkIn.dto.StudentCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
@@ -79,6 +80,16 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
     @Override
     public String teacherManagementAddNewCheckIn(CreateCheckInDTO createCheckInDTO) {
         return String.valueOf(createNewCheckIn.createNewCheckIn(createCheckInDTO));
+    }
+
+    @Override
+    public StudentCheckInDTO teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName) {
+        StudentCheckInDTO studentCheckInDTO = new StudentCheckInDTO();
+        studentCheckInDTO.setStudentName(studentName);
+        studentCheckInDTO.setMajor(major);
+        studentCheckInDTO.setCourseName(courseName);
+        studentCheckInDTO.setCheckInName(checkInName);
+        return studentCheckInDTO;
     }
 
     private Integer getStudentNumber(String classGradesName, String courseName){

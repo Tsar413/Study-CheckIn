@@ -50,11 +50,25 @@
 
                   var str = "";
                   for (var i = 0; i < data.notCheckInStudentList.length; i++) {
-                      str = "<tr><td>" + data.notCheckInStudentList[i] + "</td><td>" + data.courseName + "</td> " +
-                      "<td>" + data.classGradesName + "</td><td>" + data.checkInName + "</td>" +
-                      "<td>Change Situation</td></tr>"
+                      str = "<tr><td id = student" + i + ">" + data.notCheckInStudentList[i] + "</td>" +
+                      "<td id = courseName" + i + ">" + data.courseName + "</td> " +
+                      "<td id = classGradesName" + i + ">" + data.classGradesName + "</td>" +
+                      "<td id = checkInName" + i + ">" + data.checkInName + "</td>" +
+                      "<td><button id = " + i + " onclick = 'change(id)'>Change</button></td></tr>"
                       $("#studentList").append(str);
                   }
+              });
+    }
+
+    function change(id){
+        var studentNameVal = document.getElementById("student" + id).innerHTML;
+        var courseNameVal = document.getElementById("courseName" + id).innerHTML;
+        var majorVal = document.getElementById("classGradesName" + id).innerHTML;
+        var checkInNameVal = document.getElementById("checkInName" + id).innerHTML;
+
+        $.get("/teacherManagement-changeCheckIn?"+$.param({major:majorVal, courseName:courseNameVal, checkInName:checkInNameVal, studentName:studentNameVal
+              }),function(data){
+                  console.log(data);
               });
     }
 

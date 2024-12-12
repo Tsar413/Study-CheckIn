@@ -2,6 +2,7 @@ package com.study.checkIn.service;
 
 import com.study.checkIn.dto.CheckInResultDTO;
 import com.study.checkIn.dto.CreateCheckInDTO;
+import com.study.checkIn.dto.StudentCheckInDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
 
@@ -17,4 +18,6 @@ public interface ITeacherManagementService {
      List<String> teacherManagementCheckInCheckInName(String classGradesName, String courseName);
 
      String teacherManagementAddNewCheckIn(CreateCheckInDTO createCheckInDTO);
+
+     StudentCheckInDTO teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName);
 }
