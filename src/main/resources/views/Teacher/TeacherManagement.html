@@ -41,7 +41,7 @@
 
           document.getElementById('studentList').innerHTML = '';
 
-          var str1 = "<tr><th>Name</th><th>Course</th><th>Major</th><th>Check In Name</th><th>Change Situation</th></tr>";
+          var str1 = "<tr><th>Id</th><th>Name</th><th>Course</th><th>Major</th><th>Check In Name</th><th>Change Situation</th></tr>";
           $("#studentList").append(str1);
 
           $.get("/teacherManagement-checkInTest?"+$.param({teacherName:teacherNameVal,courseName:courseNameVal,classGradesName:classGradesNameVal,checkInName:checkInNameVal
@@ -50,7 +50,8 @@
 
                   var str = "";
                   for (var i = 0; i < data.notCheckInStudentList.length; i++) {
-                      str = "<tr><td id = student" + i + ">" + data.notCheckInStudentList[i] + "</td>" +
+                      str = "<tr id = row" + i + "><td id = studentId" + i + ">" + data.notCheckInStudentList[i].studentId + "</td>" +
+                      "<td id = studentName" + i + ">" + data.notCheckInStudentList[i].studentName + "</td>" +
                       "<td id = courseName" + i + ">" + data.courseName + "</td> " +
                       "<td id = classGradesName" + i + ">" + data.classGradesName + "</td>" +
                       "<td id = checkInName" + i + ">" + data.checkInName + "</td>" +
@@ -61,15 +62,19 @@
     }
 
     function change(id){
-        var studentNameVal = document.getElementById("student" + id).innerHTML;
+        var studentIdVal = document.getElementById("studentId" + id).innerHTML;
+        var studentNameVal = document.getElementById("studentName" + id).innerHTML;
         var courseNameVal = document.getElementById("courseName" + id).innerHTML;
         var majorVal = document.getElementById("classGradesName" + id).innerHTML;
         var checkInNameVal = document.getElementById("checkInName" + id).innerHTML;
 
-        $.get("/teacherManagement-changeCheckIn?"+$.param({major:majorVal, courseName:courseNameVal, checkInName:checkInNameVal, studentName:studentNameVal
+        $.get("/teacherManagement-changeCheckIn?"+$.param({major:majorVal, courseName:courseNameVal, checkInName:checkInNameVal, studentName:studentNameVal, studentId:studentIdVal
               }),function(data){
                   console.log(data);
+                  document.getElementById("row" + id).style.display = 'none';
               });
+
+
     }
 
     submit.onclick = function() {

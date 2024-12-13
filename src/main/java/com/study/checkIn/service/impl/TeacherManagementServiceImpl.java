@@ -2,7 +2,6 @@ package com.study.checkIn.service.impl;
 
 import com.study.checkIn.dto.CheckInResultDTO;
 import com.study.checkIn.dto.CreateCheckInDTO;
-import com.study.checkIn.dto.StudentCheckInDTO;
 import com.study.checkIn.dto.StudentDTO;
 import com.study.checkIn.entity.ClassesGrades;
 import com.study.checkIn.entity.Course;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,13 +81,31 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
     }
 
     @Override
-    public StudentCheckInDTO teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName) {
-        StudentCheckInDTO studentCheckInDTO = new StudentCheckInDTO();
-        studentCheckInDTO.setStudentName(studentName);
-        studentCheckInDTO.setMajor(major);
-        studentCheckInDTO.setCourseName(courseName);
-        studentCheckInDTO.setCheckInName(checkInName);
-        return studentCheckInDTO;
+    public String teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName, String studentId) {
+        String sql1 = SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL1 + major + courseName +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL2 + studentId +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL3 + studentName +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL4;
+        Integer result = 0;
+        try {
+            result = jdbcTemplate.queryForObject(sql1, Integer.class);
+        } catch (DataAccessException e) {
+            return "-1";
+        }
+        if(result == null){
+            return "-1";
+        }
+        String sql2 = SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL5 + major + courseName +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL6 + checkInName +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL7 + studentId +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL3 + studentName +
+                SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL4;
+        try {
+            jdbcTemplate.execute(sql2);
+        } catch (DataAccessException e) {
+            return "0";
+        }
+        return "1";
     }
 
     private Integer getStudentNumber(String classGradesName, String courseName){
@@ -130,14 +146,17 @@ public class TeacherManagementServiceImpl implements ITeacherManagementService {
         return result;
     }
 
-    private List<String> getNotCheckInList(String classGradesName, String courseName, String checkInName){
+    private List<StudentDTO> getNotCheckInList(String classGradesName, String courseName, String checkInName){
         String sql1 = SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL13 + classGradesName + courseName +
                 SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL10 + checkInName +
                 SQLConstants.CHECK_CHECK_IN_STUDENTS_SQL12;
-        List<String> list = jdbcTemplate.query(sql1, new RowMapper<String>() {
+        List<StudentDTO> list = jdbcTemplate.query(sql1, new RowMapper<StudentDTO>() {
             @Override
-            public String mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getString("student_name");
+            public StudentDTO mapRow(ResultSet resultSet, int i) throws SQLException {
+                StudentDTO studentDTO = new StudentDTO();
+                studentDTO.setStudentId(Integer.valueOf(resultSet.getString("student_id")));
+                studentDTO.setStudentName(resultSet.getString("student_name"));
+                return studentDTO;
             }
         });
         return list;

@@ -35,5 +35,5 @@ public class SQLConstants {
 
     public static final String CHECK_CHECK_IN_STUDENTS_SQL12 = "` = 0;";
 
-    public static final String CHECK_CHECK_IN_STUDENTS_SQL13 = "select student_name from `";
+    public static final String CHECK_CHECK_IN_STUDENTS_SQL13 = "select student_id, student_name from `";
 }

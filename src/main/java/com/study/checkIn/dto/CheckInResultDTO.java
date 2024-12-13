@@ -17,12 +17,12 @@ public class CheckInResultDTO {
 
     private Integer notCheckInNumber;
 
-    private List<String> notCheckInStudentList;
+    private List<StudentDTO> notCheckInStudentList;
 
     public CheckInResultDTO() {
     }
 
-    public CheckInResultDTO(String teacherName, String courseName, String classGradesName, String checkInName, Integer studentNumber, Integer checkInNumber, Integer notCheckInNumber, List<String> notCheckInStudentList) {
+    public CheckInResultDTO(String teacherName, String courseName, String classGradesName, String checkInName, Integer studentNumber, Integer checkInNumber, Integer notCheckInNumber, List<StudentDTO> notCheckInStudentList) {
         this.teacherName = teacherName;
         this.courseName = courseName;
         this.classGradesName = classGradesName;
@@ -73,11 +73,11 @@ public class CheckInResultDTO {
         this.notCheckInNumber = notCheckInNumber;
     }
 
-    public List<String> getNotCheckInStudentList() {
+    public List<StudentDTO> getNotCheckInStudentList() {
         return notCheckInStudentList;
     }
 
-    public void setNotCheckInStudentList(List<String> notCheckInStudentList) {
+    public void setNotCheckInStudentList(List<StudentDTO> notCheckInStudentList) {
         this.notCheckInStudentList = notCheckInStudentList;
     }
 

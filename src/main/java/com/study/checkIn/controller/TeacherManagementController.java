@@ -51,7 +51,7 @@ public class TeacherManagementController {
     }
 
     @GetMapping("/teacherManagement-changeCheckIn")
-    public StudentCheckInDTO teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName){
-        return iTeacherManagementService.teacherManagementChangeCheckIn(major, courseName, checkInName, studentName);
+    public String teacherManagementChangeCheckIn(String major, String courseName, String checkInName, String studentName, String studentId){
+        return iTeacherManagementService.teacherManagementChangeCheckIn(major, courseName, checkInName, studentName, studentId);
     }
 }
