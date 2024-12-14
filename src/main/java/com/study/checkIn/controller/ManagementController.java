@@ -64,4 +64,9 @@ public class ManagementController {
     public String managementGetCheckInURL(String classGradesName, String courses, String checkInName){
         return iManagementService.managementGetCheckInURL(classGradesName, courses, checkInName);
     }
+
+    @GetMapping("/management-changeTeacherName")
+    public String managementChangeTeacherName(String oldTeacherName, String newTeacherName){
+        return iManagementService.managementChangeTeacherName(oldTeacherName, newTeacherName);
+    }
 }

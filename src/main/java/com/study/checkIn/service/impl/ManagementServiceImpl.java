@@ -71,4 +71,14 @@ public class ManagementServiceImpl implements IManagementService {
                 courses + URLConstants.URL4 + checkInName;
         return result;
     }
+
+    @Override
+    public String managementChangeTeacherName(String oldTeacherName, String newTeacherName) {
+        try {
+            userServiceMapper.changeTeacherName(oldTeacherName, newTeacherName);
+        } catch (Exception e){
+            return "-1";
+        }
+        return "1";
+    }
 }

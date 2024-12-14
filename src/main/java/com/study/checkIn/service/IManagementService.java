@@ -20,4 +20,6 @@ public interface IManagementService {
     List<String> managementCheckCheckIn(String classGradeName, String courses);
 
     String managementGetCheckInURL(String classGradesName, String courses, String checkInName);
+
+    String managementChangeTeacherName(String oldTeacherName, String newTeacherName);
 }

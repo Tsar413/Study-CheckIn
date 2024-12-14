@@ -23,6 +23,11 @@
 <select id="selectCheckInName"></select>
 <button id="submit4">Submit</button>
 <br>
+<label>Change Teacher Name</label>
+<input type="text" placeholder="Old Teacher Name" id="oldTeacherName">
+<input type="text" placeholder="New Teacher Name" id="newTeacherName">
+<button id="submit5">Submit</button>
+<br>
 
 
 <script inline="javascript">
@@ -31,6 +36,7 @@
   let submit2 = document.getElementById("submit2");
   let submit3 = document.getElementById("submit3");
   let submit4 = document.getElementById("submit4");
+  let submit5 = document.getElementById("submit5");
   submit.onclick = function() {
 
 
@@ -136,6 +142,19 @@
                 console.log(data);
 
 
+
+            });
+
+    }
+
+    submit5.onclick = function() {
+
+        var oldTeacherNameVal = $("#oldTeacherName").val();
+        var newTeacherNameVal = $("#newTeacherName").val();
+
+        $.get("/management-changeTeacherName?"+$.param({oldTeacherName:oldTeacherNameVal, newTeacherName:newTeacherNameVal
+            }),function(data){
+                console.log(data);
 
             });
 
