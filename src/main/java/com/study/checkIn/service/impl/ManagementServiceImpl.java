@@ -81,4 +81,16 @@ public class ManagementServiceImpl implements IManagementService {
         }
         return "1";
     }
+
+    @Override
+    public Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime) {
+        Course course = new Course();
+        course.setId(Integer.parseInt(id));
+        course.setCourseId(Integer.parseInt(courseId));
+        course.setCourseName(courseName);
+        course.setClassId(Integer.parseInt(classId));
+        course.setTeacherId(Integer.parseInt(teacherId));
+        course.setCourseTime(courseTime);
+        return course;
+    }
 }

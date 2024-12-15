@@ -69,4 +69,9 @@ public class ManagementController {
     public String managementChangeTeacherName(String oldTeacherName, String newTeacherName){
         return iManagementService.managementChangeTeacherName(oldTeacherName, newTeacherName);
     }
+
+    @GetMapping("/management-changeCourse")
+    public Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime){
+        return iManagementService.managementChangeCourse(id, courseId, courseName, classId, teacherId, courseTime);
+    }
 }

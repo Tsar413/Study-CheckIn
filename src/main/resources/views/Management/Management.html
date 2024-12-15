@@ -9,6 +9,9 @@
 <label>Check All Information</label>
 <button id="submit">Submit</button>
 <br>
+<table id = "courseTable" border="1">
+</table>
+<br>
 <label>Check URLs</label>
 <input type="text" placeholder="Teacher Name" id="teacherName" oninput="checkTeacherName(event)">
 <select id="selectTeacherName"></select>
@@ -48,12 +51,46 @@
         $.get("/management-getAllCourses?"+$.param({
             }),function(data){
                 console.log(data);
+
+                document.getElementById("courseTable").innerHTML = "";
+
+                var str = "<tr><th>Id</th><th>Course Id</th><th>Course Name</th><th>Class Id</th><th>Teacher Id</th><th>Course Time</th><th>Function</th></tr>";
+                $("#courseTable").append(str);
+
+                str = "";
+                  for (var i = 0; i < data.length; i++) {
+                      str = "<tr id = rowCourse" + i + "><td id = courseId" + i + ">" + data[i].id + "</td>" +
+                      "<td id = courseIdId" + i + ">" + data[i].courseId + "</td>" +
+                      "<td><input type = 'text' id = courseName" + i + " value = \"" + data[i].courseName + "\"></td>" +
+                      "<td><input type = 'text' id = courseClassId" + i + " value = " + data[i].classId + "></td> " +
+                      "<td><input type = 'text' id = courseTeacherId" + i + " value = " + data[i].teacherId + "></td>" +
+                      "<td><input type = 'text' id = courseTime" + i + " value = " + data[i].courseTime + "></td>" +
+                      "<td><button id = course" + i + " onclick = 'changeCourse(id)'>Change</button></td></tr>";
+                      $("#courseTable").append(str);
+                  }
             });
 
         $.get("/management-getAllClassesGrades?"+$.param({
             }),function(data){
                 console.log(data);
             });
+
+    }
+
+    function changeCourse(id){
+        id = id.substring(6);
+        var idVal = document.getElementById("courseId" + id).innerHTML;
+        var courseIdVal = document.getElementById("courseIdId" + id).innerHTML;
+        var courseNameVal = document.getElementById("courseName" + id).value;
+        var courseClassIdVal = document.getElementById("courseClassId" + id).value;
+        var courseTeacherIdVal = document.getElementById("courseTeacherId" + id).value;
+        var courseTimeVal = document.getElementById("courseTime" + id).value;
+        $.get("/management-changeCourse?"+$.param({id:idVal, courseId:courseIdVal, courseName:courseNameVal, classId:courseClassIdVal, teacherId:courseTeacherIdVal, courseTime:courseTimeVal
+              }),function(data){
+                  console.log(data);
+
+              });
+
 
     }
 
