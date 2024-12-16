@@ -7,6 +7,7 @@ import com.study.checkIn.mapper.ClassesGradesServiceMapper;
 import com.study.checkIn.mapper.CourseServiceMapper;
 import com.study.checkIn.mapper.UserServiceMapper;
 import com.study.checkIn.service.IManagementService;
+import com.study.checkIn.utils.ChangeCourse;
 import com.study.checkIn.utils.GetStudyDetails;
 import com.study.checkIn.utils.SQLConstants;
 import com.study.checkIn.utils.URLConstants;
@@ -34,6 +35,9 @@ public class ManagementServiceImpl implements IManagementService {
 
     @Resource
     private GetStudyDetails getStudyDetails;
+
+    @Resource
+    private ChangeCourse changeCourse;
 
     @Override
     public List<User> managementGetAllUsers() {
@@ -84,6 +88,7 @@ public class ManagementServiceImpl implements IManagementService {
 
     @Override
     public Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime) {
+        Course courseData = courseServiceMapper.findByCourseId(Integer.parseInt(id), Integer.parseInt(courseId)).get(0);
         Course course = new Course();
         course.setId(Integer.parseInt(id));
         course.setCourseId(Integer.parseInt(courseId));
@@ -91,6 +96,24 @@ public class ManagementServiceImpl implements IManagementService {
         course.setClassId(Integer.parseInt(classId));
         course.setTeacherId(Integer.parseInt(teacherId));
         course.setCourseTime(courseTime);
+        int flag = checkChangeCourse(courseData, course);
+        if(flag == 0){
+            return null;
+        }
         return course;
+    }
+
+    private Integer checkChangeCourse(Course courseData, Course newCourse){
+        if(!courseData.getCourseTime().equals(newCourse.getCourseTime())){
+            try {
+                changeCourse.changeCourseTime(courseData, newCourse);
+            } catch (Exception e){
+                return 0;
+            }
+        }
+        if(!courseData.getCourseName().equals(newCourse.getCourseName())){
+            changeCourse.changeCourseName(courseData, newCourse);
+        }
+        return 1;
     }
 }
