@@ -114,6 +114,13 @@ public class ManagementServiceImpl implements IManagementService {
         if(!courseData.getCourseName().equals(newCourse.getCourseName())){
             changeCourse.changeCourseName(courseData, newCourse);
         }
+        if(!courseData.getTeacherId().equals(newCourse.getTeacherId())){
+            try {
+                changeCourse.changeTeacherId(courseData, newCourse);
+            } catch (Exception e){
+                return 0;
+            }
+        }
         return 1;
     }
 }

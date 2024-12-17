@@ -34,4 +34,9 @@ public interface CourseServiceMapper  extends JpaRepository<Course, Integer> {
     @Transactional
     @Modifying
     Integer changeCourseTime(Integer id, Integer courseId, String courseTime);
+
+    @Query(value = "update Course set teacher_id = ?3 where id = ?1 && course_id = ?2", nativeQuery = true)
+    @Transactional
+    @Modifying
+    Integer changeTeacherId(Integer id, Integer courseId, Integer teacherId);
 }

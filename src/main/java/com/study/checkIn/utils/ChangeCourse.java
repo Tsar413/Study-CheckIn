@@ -32,4 +32,8 @@ public class ChangeCourse {
         System.out.println(major + newCourse.getCourseName());
         return 0;
     }
+
+    public Integer changeTeacherId(Course courseData, Course newCourse){
+        return courseServiceMapper.changeTeacherId(newCourse.getId(), newCourse.getCourseId(), newCourse.getTeacherId());
+    }
 }
