@@ -20,6 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class ManagementServiceImpl implements IManagementService {
@@ -38,6 +40,8 @@ public class ManagementServiceImpl implements IManagementService {
 
     @Resource
     private ChangeCourse changeCourse;
+
+    private final Lock changeLock = new ReentrantLock();
 
     @Override
     public List<User> managementGetAllUsers() {
@@ -96,7 +100,17 @@ public class ManagementServiceImpl implements IManagementService {
         course.setClassId(Integer.parseInt(classId));
         course.setTeacherId(Integer.parseInt(teacherId));
         course.setCourseTime(courseTime);
-        int flag = checkChangeCourse(courseData, course);
+        boolean b = changeLock.tryLock();
+        int flag = 0;
+        if(b){
+            try {
+                flag = checkChangeCourse(courseData, course);
+            } catch (Exception e){
+                return null;
+            } finally {
+                changeLock.unlock();
+            }
+        }
         if(flag == 0){
             return null;
         }
@@ -117,6 +131,13 @@ public class ManagementServiceImpl implements IManagementService {
         if(!courseData.getTeacherId().equals(newCourse.getTeacherId())){
             try {
                 changeCourse.changeTeacherId(courseData, newCourse);
+            } catch (Exception e){
+                return 0;
+            }
+        }
+        if(!courseData.getClassId().equals(newCourse.getClassId())){
+            try {
+                changeCourse.changeClassGrades(courseData, newCourse);
             } catch (Exception e){
                 return 0;
             }

@@ -36,4 +36,12 @@ public class ChangeCourse {
     public Integer changeTeacherId(Course courseData, Course newCourse){
         return courseServiceMapper.changeTeacherId(newCourse.getId(), newCourse.getCourseId(), newCourse.getTeacherId());
     }
+
+    public Integer changeClassGrades(Course courseData, Course newCourse){
+        String majorOld = classesGradesServiceMapper.findByClassGradesName(String.valueOf(courseData.getClassId())).get(0).getMajor();
+        String majorNew = classesGradesServiceMapper.findByClassGradesName(String.valueOf(newCourse.getClassId())).get(0).getMajor();
+        System.out.println(majorOld + courseData.getCourseName());
+        System.out.println(majorNew + newCourse.getCourseName());
+        return 0;
+    }
 }
