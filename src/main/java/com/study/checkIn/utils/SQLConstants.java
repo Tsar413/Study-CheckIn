@@ -36,4 +36,10 @@ public class SQLConstants {
     public static final String CHECK_CHECK_IN_STUDENTS_SQL12 = "` = 0;";
 
     public static final String CHECK_CHECK_IN_STUDENTS_SQL13 = "select student_id, student_name from `";
+
+    public static final String CHANGE_TABLE_NAME1 = "Alter table `";
+
+    public static final String CHANGE_TABLE_NAME2 = "` Rename `";
+
+    public static final String CHANGE_TABLE_NAME3 = "`;";
 }
