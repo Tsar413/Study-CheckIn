@@ -42,4 +42,8 @@ public class SQLConstants {
     public static final String CHANGE_TABLE_NAME2 = "` Rename `";
 
     public static final String CHANGE_TABLE_NAME3 = "`;";
+
+    public static final String DROP_TABLE1 = "Drop table If exists `";
+
+    public static final String DROP_TABLE2 = "`;";
 }
