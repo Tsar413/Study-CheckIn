@@ -24,4 +24,6 @@ public interface IManagementService {
     String managementChangeTeacherName(String oldTeacherName, String newTeacherName);
 
     Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime);
+
+    Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime);
 }

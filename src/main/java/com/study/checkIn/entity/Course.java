@@ -20,16 +20,22 @@ public class Course {
 
     private String courseTime;
 
+    private Integer isCancelled;
+
+    private Integer isFinished;
+
     public Course() {
     }
 
-    public Course(Integer id, Integer courseId, String courseName, Integer teacherId, Integer classId, String courseTime) {
+    public Course(Integer id, Integer courseId, String courseName, Integer teacherId, Integer classId, String courseTime, Integer isCancelled, Integer isFinished) {
         this.id = id;
         this.courseId = courseId;
         this.courseName = courseName;
         this.teacherId = teacherId;
         this.classId = classId;
         this.courseTime = courseTime;
+        this.isCancelled = isCancelled;
+        this.isFinished = isFinished;
     }
 
     public Integer getId() {
@@ -80,6 +86,22 @@ public class Course {
         this.courseTime = courseTime;
     }
 
+    public Integer getIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsCancelled(Integer isCancelled) {
+        this.isCancelled = isCancelled;
+    }
+
+    public Integer getIsFinished() {
+        return isFinished;
+    }
+
+    public void setIsFinished(Integer isFinished) {
+        this.isFinished = isFinished;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -89,6 +111,8 @@ public class Course {
                 ", teacherId=" + teacherId +
                 ", classId=" + classId +
                 ", courseTime='" + courseTime + '\'' +
+                ", isCancelled=" + isCancelled +
+                ", isFinished=" + isFinished +
                 '}';
     }
 }

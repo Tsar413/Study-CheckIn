@@ -62,11 +62,13 @@
                       str = "<tr id = rowCourse" + i + "><td id = courseId" + i + ">" + data[i].id + "</td>" +
                       "<td id = courseIdId" + i + ">" + data[i].courseId + "</td>" +
                       "<td><input type = 'text' id = courseName" + i + " value = \"" + data[i].courseName + "\"></td>" +
-                      "<td><input type = 'text' id = courseClassId" + i + " value = " + data[i].classId + "></td> " +
+                      "<td><input type = 'text' id = courseClassId" + i + " value = " + data[i].classId + " oninput = 'checkClassName1(id)'>" +
+                      "<select id=selectClassName1" + i + " onclick = 'turnClassValue(id)'></select></td>" +
                       "<td><input type = 'text' id = courseTeacherId" + i + " value = " + data[i].teacherId + " oninput = 'checkTeacherName1(id)'>" +
                       "<select id=selectTeacherName1" + i + " onclick = 'turnTeacherValue(id)'></select></td>" +
                       "<td><input type = 'text' id = courseTime" + i + " value = " + data[i].courseTime + "></td>" +
-                      "<td><button id = course" + i + " onclick = 'changeCourse(id)'>Change</button></td></tr>";
+                      "<td><button id = course" + i + " onclick = 'changeCourse(id)'>Change</button>" +
+                      "<button id = deleteCourse" + i + " onclick = 'deleteCourse(id)'>Delete</button></td></tr>";
                       $("#courseTable").append(str);
                   }
             });
@@ -76,6 +78,21 @@
                 console.log(data);
             });
 
+    }
+
+    function deleteCourse(id){
+        id = id.substring(12);
+        var idVal = document.getElementById("courseId" + id).innerHTML;
+        var courseIdVal = document.getElementById("courseIdId" + id).innerHTML;
+        var courseNameVal = document.getElementById("courseName" + id).value;
+        var courseClassIdVal = document.getElementById("courseClassId" + id).value;
+        var courseTeacherIdVal = document.getElementById("courseTeacherId" + id).value;
+        var courseTimeVal = document.getElementById("courseTime" + id).value;
+        $.get("/management-deleteCourse?"+$.param({id:idVal, courseId:courseIdVal, courseName:courseNameVal, classId:courseClassIdVal, teacherId:courseTeacherIdVal, courseTime:courseTimeVal
+              }),function(data){
+                  console.log(data);
+
+              });
     }
 
     function changeCourse(id){
@@ -93,6 +110,34 @@
               });
 
 
+    }
+
+    function checkClassName1(id) {
+        var classNameVal = document.getElementById(id).value;
+        console.log(classNameVal);
+        id = id.substring(13);
+        document.getElementById('selectClassName1' + id).innerHTML = "";
+        $.get("/managementAdd-checkClassGrades?"+$.param({classGradesName:classNameVal
+            }),function(data){
+                console.log(data);
+
+                if(data !== ""){
+                  // 遍历后端数据，为每个数据项创建option元素
+                  data.forEach(item => {
+                      var option = document.createElement('option');
+                      option.value = item.classId;
+                      option.label = item.major;
+                      document.getElementById('selectClassName1' + id).appendChild(option);
+                  });
+                }
+            });
+
+    }
+
+    function turnClassValue(id){
+      var v = document.getElementById(id).value;
+      id = id.substring(16);
+      document.getElementById("courseClassId" + id).value = v;
     }
 
     function checkTeacherName1(id) {

@@ -117,6 +117,19 @@ public class ManagementServiceImpl implements IManagementService {
         return course;
     }
 
+    @Override
+    public Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime) {
+        Course courseData = courseServiceMapper.findByCourseId(Integer.parseInt(id), Integer.parseInt(courseId)).get(0);
+        Course course = new Course();
+        course.setId(Integer.parseInt(id));
+        course.setCourseId(Integer.parseInt(courseId));
+        course.setCourseName(courseName);
+        course.setClassId(Integer.parseInt(classId));
+        course.setTeacherId(Integer.parseInt(teacherId));
+        course.setCourseTime(courseTime);
+        return course;
+    }
+
     private Integer checkChangeCourse(Course courseData, Course newCourse){
         if(!courseData.getCourseTime().equals(newCourse.getCourseTime())){
             try {

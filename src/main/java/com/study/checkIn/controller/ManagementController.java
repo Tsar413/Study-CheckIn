@@ -74,4 +74,9 @@ public class ManagementController {
     public Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime){
         return iManagementService.managementChangeCourse(id, courseId, courseName, classId, teacherId, courseTime);
     }
+
+    @GetMapping("/management-deleteCourse")
+    public Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime){
+        return iManagementService.managementDeleteCourse(id, courseId, courseName, classId, teacherId, courseTime);
+    }
 }
