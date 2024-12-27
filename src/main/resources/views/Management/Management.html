@@ -73,6 +73,11 @@
                   }
             });
 
+        $.get("/management-getCoursesNotAvailable?"+$.param({
+            }),function(data){
+                console.log(data);
+            });
+
         $.get("/management-getAllClassesGrades?"+$.param({
             }),function(data){
                 console.log(data);

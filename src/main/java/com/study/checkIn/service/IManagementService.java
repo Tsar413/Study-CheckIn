@@ -25,5 +25,7 @@ public interface IManagementService {
 
     Course managementChangeCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime);
 
-    Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime);
+    String managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime);
+
+    List<Course> managementCoursesNotAvailable();
 }

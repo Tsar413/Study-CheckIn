@@ -18,8 +18,11 @@ public interface CourseServiceMapper  extends JpaRepository<Course, Integer> {
     @Query(value = "select * from Course where class_id = ?1", nativeQuery = true)
     List<Course> findByClassId(int classId);
 
-    @Query(value = "select * from Course", nativeQuery = true)
+    @Query(value = "select * from Course where is_cancelled IS NULL && is_finished IS NULL", nativeQuery = true)
     List<Course> findAllCourses();
+
+    @Query(value = "select * from Course where is_cancelled = 1 || is_finished = 1", nativeQuery = true)
+    List<Course> findNotAvailableCourses();
 
     @Query(value = "select * from course where teacher_id = ?1", nativeQuery = true)
     List<Course> findByTeacherId(Integer teacherId);
@@ -44,4 +47,9 @@ public interface CourseServiceMapper  extends JpaRepository<Course, Integer> {
     @Transactional
     @Modifying
     Integer changeCourseAndClass(Integer id, Integer courseId, Integer classId, String courseName);
+
+    @Query(value = "update Course set is_cancelled = 1 where id = ?1 && course_id = ?2", nativeQuery = true)
+    @Transactional
+    @Modifying
+    Integer deleteCourse(Integer id, Integer courseId);
 }

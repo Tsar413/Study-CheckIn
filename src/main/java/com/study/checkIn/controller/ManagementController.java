@@ -35,6 +35,11 @@ public class ManagementController {
         return iManagementService.managementGetAllCourses();
     }
 
+    @GetMapping("/management-getCoursesNotAvailable")
+    public List<Course> managementGetCoursesNotAvailable(){
+        return iManagementService.managementCoursesNotAvailable();
+    }
+
     @GetMapping("/management-getAllClassesGrades")
     public List<ClassesGrades> managementGetAllClassesGrades(){
         return iManagementService.managementGetAllClassesGrades();
@@ -76,7 +81,7 @@ public class ManagementController {
     }
 
     @GetMapping("/management-deleteCourse")
-    public Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime){
+    public String managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime){
         return iManagementService.managementDeleteCourse(id, courseId, courseName, classId, teacherId, courseTime);
     }
 }

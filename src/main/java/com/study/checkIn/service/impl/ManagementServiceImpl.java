@@ -9,16 +9,10 @@ import com.study.checkIn.mapper.UserServiceMapper;
 import com.study.checkIn.service.IManagementService;
 import com.study.checkIn.utils.ChangeCourse;
 import com.study.checkIn.utils.GetStudyDetails;
-import com.study.checkIn.utils.SQLConstants;
 import com.study.checkIn.utils.URLConstants;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -118,16 +112,19 @@ public class ManagementServiceImpl implements IManagementService {
     }
 
     @Override
-    public Course managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime) {
-        Course courseData = courseServiceMapper.findByCourseId(Integer.parseInt(id), Integer.parseInt(courseId)).get(0);
-        Course course = new Course();
-        course.setId(Integer.parseInt(id));
-        course.setCourseId(Integer.parseInt(courseId));
-        course.setCourseName(courseName);
-        course.setClassId(Integer.parseInt(classId));
-        course.setTeacherId(Integer.parseInt(teacherId));
-        course.setCourseTime(courseTime);
-        return course;
+    public String managementDeleteCourse(String id, String courseId, String courseName, String classId, String teacherId, String courseTime) {
+        Integer t = 0;
+        try {
+            t = courseServiceMapper.deleteCourse(Integer.parseInt(id), Integer.parseInt(courseId));
+        } catch (Exception e){
+            return "0";
+        }
+        return String.valueOf(t);
+    }
+
+    @Override
+    public List<Course> managementCoursesNotAvailable() {
+        return courseServiceMapper.findNotAvailableCourses();
     }
 
     private Integer checkChangeCourse(Course courseData, Course newCourse){
